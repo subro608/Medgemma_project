@@ -12,20 +12,23 @@ BEFORE RUNNING:
 2. Get HF token: https://huggingface.co/settings/tokens
 3. Get Kaggle credentials: https://www.kaggle.com/settings
 """
-
+from dotenv import load_dotenv
+load_dotenv(".env")  # loads variables into os.environ
 # ============================================================================
 # CELL 1: SETUP + DATA DOWNLOAD
 # ============================================================================
 
 # -------------------- CONFIGURATION (EDIT THESE!) --------------------
 
-USER = "sd5963"
-HF_TOKEN = "hf_XXXXXXXXXXXXXXXXXXXX"
+import os
 
-KAGGLE_USERNAME = "visweswarparupudi"
-KAGGLE_KEY = "KGAT_c4ca3f982e3326818ad4d3eb20db1739"
+USER = os.environ.get("USER", "sd5963")
+SCRATCH_DIR = os.environ.get("SCRATCH_DIR", f"/scratch/{USER}/big_data")
 
-SCRATCH_DIR = f"/scratch/{USER}/big_data"
+HF_TOKEN = os.environ.get("HF_TOKEN", "")
+KAGGLE_USERNAME = os.environ.get("KAGGLE_USERNAME", "")
+KAGGLE_KEY = os.environ.get("KAGGLE_KEY", "")
+
 DATA_DIR = f"{SCRATCH_DIR}/data"
 OUTPUT_DIR = f"{SCRATCH_DIR}/outputs"
 
