@@ -124,8 +124,13 @@ print("✅ Imports successful\n")
 
 # ------------------------ CREATE DIRECTORIES ------------------------
 
-for directory in [SCRATCH_DIR, DATA_DIR, OUTPUT_DIR]:
+# Create base directories
+for directory in [SCRATCH_DIR, OUTPUT_DIR]:
     Path(directory).mkdir(parents=True, exist_ok=True)
+
+# Only create DATA_DIR if not using S3 source (it will be created later if needed)
+if not USE_S3_SOURCE:
+    Path(DATA_DIR).mkdir(parents=True, exist_ok=True)
 
 RESULTS_ROOT = Path(OUTPUT_DIR) / "results"
 METRICS_ROOT = Path(OUTPUT_DIR) / "metrics"
