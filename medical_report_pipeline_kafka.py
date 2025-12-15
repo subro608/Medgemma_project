@@ -7,10 +7,15 @@ Report-generation version:
   (no NORMAL/PNEUMONIA classification).
 - Keeps auto-tuning, GPU batching, Spark load tests, and queue simulation.
 
+This version has been extended to optionally:
+- Read input images from AWS S3 (via Spark `binaryFile`)
+- Write predictions to AWS S3 (Parquet/CSV), similar to the S3 notebook
+
 BEFORE RUNNING:
 1. Accept Med-GEMMA terms: https://huggingface.co/google/medgemma-4b-it
 2. Get HF token: https://huggingface.co/settings/tokens
 3. Get Kaggle credentials: https://www.kaggle.com/settings
+4. (Optional, for S3 mode) Configure AWS credentials and S3 bucket paths
 """
 from dotenv import load_dotenv
 load_dotenv(".env")  # loads variables into os.environ
@@ -32,6 +37,22 @@ KAGGLE_KEY = os.environ.get("KAGGLE_KEY", "")
 DATA_DIR = f"{SCRATCH_DIR}/data"
 OUTPUT_DIR = f"{SCRATCH_DIR}/outputs"
 
+# -------------------- OPTIONAL S3 CONFIG --------------------
+# Load AWS credentials from environment variables (set in .env file)
+# For production, prefer IAM roles or environment variables instead of hardcoding.
+
+AWS_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY_ID", "")  # Or use IAM roles
+AWS_SECRET_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "")  # Or use IAM roles
+AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")  # Change to your region
+
+# Buckets / prefixes (equivalent to RAW_IMAGES_BUCKET and RESULTS_BUCKET in the notebook)
+S3_RAW_IMAGES_PREFIX = "s3a://medgemma-images"
+S3_RESULTS_PREFIX = "s3a://medgemma-results"
+
+# Hardcode S3 usage flags so the pipeline always uses S3 for input + results
+USE_S3_SOURCE = True
+USE_S3_RESULTS = True
+
 # LOAD-TEST CONFIG
 TEST_MODE = True
 # In TEST_MODE, we will run one experiment per size below (capped by available images)
@@ -40,10 +61,14 @@ TEST_IMAGE_SIZES = [20, 400, 800, 1600]
 GPU_CONFIG = "auto"  # currently unused, but kept for clarity
 
 # -------------------- KAFKA CONFIG --------------------
-# If True: read image requests from Kafka instead of scanning filesystem.
+# If True: read image requests from Kafka instead of scanning filesystem/S3.
 USE_KAFKA = True
 KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"
 KAFKA_TOPIC = "cxr_raw_requests"  # must match your producer
+
+# If S3 is selected as the source, override Kafka-based input.
+if USE_S3_SOURCE:
+    USE_KAFKA = False
 
 # -------------------- AUTO-TUNING + BATCHING CONFIG --------------------
 
@@ -86,6 +111,8 @@ from pyspark.sql.functions import (
     sum as spark_sum,
     when,
     from_json,
+    split,
+    size,
 )
 
 import matplotlib
@@ -134,52 +161,60 @@ with open(kaggle_dir / 'kaggle.json', 'w') as f:
 
 print("✅ Credentials configured\n")
 
-# ------------------------ DOWNLOAD & ORGANIZE DATASET ------------------------
+# ------------------------ DOWNLOAD & ORGANIZE DATASET (LOCAL MODE) ------------------------
 
 print("="*70)
 print("DATASET SETUP")
 print("="*70)
 
-raw_data_dir = Path(DATA_DIR) / "raw"
-raw_data_dir.mkdir(exist_ok=True)
-
-if not (raw_data_dir / "chest_xray").exists():
-    print("Downloading from Kaggle...")
-    print("Dataset URL: https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia")
-    import kaggle
-    kaggle.api.authenticate()
-    kaggle.api.dataset_download_files('paultimothymooney/chest-xray-pneumonia',
-                                      path=str(raw_data_dir), unzip=True)
-    print("✅ Downloaded\n")
+if USE_S3_SOURCE:
+    # In S3 mode we assume images already live in S3 and we do NOT download Kaggle.
+    print("⚙  S3 source is enabled — skipping local Kaggle download/organization.")
+    DATA_ROOT = None
 else:
-    print("✅ Already downloaded\n")
+    raw_data_dir = Path(DATA_DIR) / "raw"
+    raw_data_dir.mkdir(exist_ok=True)
 
-organized_dir = Path(DATA_DIR) / "organized"
-(organized_dir / "NORMAL").mkdir(parents=True, exist_ok=True)
-(organized_dir / "PNEUMONIA").mkdir(parents=True, exist_ok=True)
+    if not (raw_data_dir / "chest_xray").exists():
+        print("Downloading from Kaggle...")
+        print("Dataset URL: https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia")
+        import kaggle
+        kaggle.api.authenticate()
+        kaggle.api.dataset_download_files(
+            "paultimothymooney/chest-xray-pneumonia",
+            path=str(raw_data_dir),
+            unzip=True,
+        )
+        print("✅ Downloaded\n")
+    else:
+        print("✅ Already downloaded\n")
 
-source_dir = raw_data_dir / "chest_xray"
+    organized_dir = Path(DATA_DIR) / "organized"
+    (organized_dir / "NORMAL").mkdir(parents=True, exist_ok=True)
+    (organized_dir / "PNEUMONIA").mkdir(parents=True, exist_ok=True)
 
-for split in ["train", "test", "val"]:
-    for label in ["NORMAL", "PNEUMONIA"]:
-        src = source_dir / split / label
-        dst = organized_dir / label
-        if src.exists():
-            for ext in ["*.jpeg", "*.jpg", "*.png"]:
-                for img in src.glob(ext):
-                    dest_file = dst / f"{split}_{img.name}"
-                    if not dest_file.exists():
-                        shutil.copy2(img, dest_file)
+    source_dir = raw_data_dir / "chest_xray"
 
-normal_count = len(list((organized_dir / "NORMAL").glob("*")))
-pneumonia_count = len(list((organized_dir / "PNEUMONIA").glob("*")))
+    for split in ["train", "test", "val"]:
+        for label in ["NORMAL", "PNEUMONIA"]:
+            src = source_dir / split / label
+            dst = organized_dir / label
+            if src.exists():
+                for ext in ["*.jpeg", "*.jpg", "*.png"]:
+                    for img in src.glob(ext):
+                        dest_file = dst / f"{split}_{img.name}"
+                        if not dest_file.exists():
+                            shutil.copy2(img, dest_file)
 
-print(f"✅ Dataset organized:")
-print(f"   NORMAL: {normal_count:,}")
-print(f"   PNEUMONIA: {pneumonia_count:,}")
-print(f"   TOTAL: {normal_count + pneumonia_count:,}\n")
+    normal_count = len(list((organized_dir / "NORMAL").glob("*")))
+    pneumonia_count = len(list((organized_dir / "PNEUMONIA").glob("*")))
 
-DATA_ROOT = organized_dir
+    print("✅ Dataset organized:")
+    print(f"   NORMAL: {normal_count:,}")
+    print(f"   PNEUMONIA: {pneumonia_count:,}")
+    print(f"   TOTAL: {normal_count + pneumonia_count:,}\n")
+
+    DATA_ROOT = organized_dir
 
 # ------------------------ GPU CHECK ------------------------
 
@@ -324,9 +359,9 @@ try:
 except Exception:
     pass
 
-spark = (
+builder = (
     SparkSession.builder
-    .appName("MedicalImagePipeline_LoadTest_AutoTuned_ReportGen_Kafka")
+    .appName("MedicalImagePipeline_LoadTest_AutoTuned_ReportGen_Kafka_S3")
     .master(f"local[{base_partitions}]")
     .config("spark.driver.memory", "16g")
     .config("spark.executor.memory", "16g")
@@ -334,15 +369,25 @@ spark = (
     .config("spark.default.parallelism", str(base_partitions))
     .config("spark.driver.maxResultSize", "4g")
     .config("spark.sql.execution.arrow.pyspark.enabled", "true")
-    # .config("spark.jars.ivy", SPARK_IVY_DIR)
-    # .config("spark.jars", "")
-    # .config(
-    #     "spark.jars.packages",
-    #     "org.apache.spark:spark-sql-kafka-0-10_2.13:4.0.1,"
-    #     "org.apache.spark:spark-token-provider-kafka-0-10_2.13:4.0.1"
-    # )
-    .getOrCreate()
 )
+
+# If S3 integration is requested, configure Hadoop s3a connector.
+if USE_S3_SOURCE or USE_S3_RESULTS:
+    if AWS_ACCESS_KEY and AWS_SECRET_KEY:
+        builder = (
+            builder.config("spark.hadoop.fs.s3a.access.key", AWS_ACCESS_KEY)
+            .config("spark.hadoop.fs.s3a.secret.key", AWS_SECRET_KEY)
+            .config("spark.hadoop.fs.s3a.endpoint", f"s3.{AWS_REGION}.amazonaws.com")
+            .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+            .config("spark.hadoop.fs.s3a.path.style.access", "true")
+            .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "true")
+            .config("spark.hadoop.fs.s3a.fast.upload", "true")
+        )
+    else:
+        print("⚠️  USE_S3_SOURCE/USE_S3_RESULTS is enabled but AWS credentials are missing.")
+        print("    Make sure AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_REGION are set.")
+
+spark = builder.getOrCreate()
 
 
 print(f"✅ Spark v{spark.version} initialized\n")
@@ -353,7 +398,36 @@ print("Building input DataFrame...")
 
 base_df = None
 
-if USE_KAFKA:
+if USE_S3_SOURCE:
+    # ------------------------------------------------------------------
+    # S3 SOURCE MODE
+    # ------------------------------------------------------------------
+    if not S3_RAW_IMAGES_PREFIX:
+        print("❌ USE_S3_SOURCE is True but S3_RAW_IMAGES_PREFIX is not set.")
+        spark.stop()
+        sys.exit(1)
+
+    images_path = f"{S3_RAW_IMAGES_PREFIX}/"
+    print(f"⚙  Using S3 source: {images_path}")
+
+    # We mirror the notebook's S3 image loading pattern, but only keep path.
+    # true_label is left as NULL since S3 paths may not encode labels.
+    images_df = (
+        spark.read.format("binaryFile")
+        .option("pathGlobFilter", "*.png")
+        .option("recursiveFileLookup", "true")
+        .load(images_path)
+        .selectExpr(
+            "path as file_path",
+            "NULL as true_label",
+        )
+    )
+
+    base_df = images_df
+    total_available = base_df.count()
+    print(f"✅ S3 DataFrame built with {total_available:,} images\n")
+
+elif USE_KAFKA:
     print(f"⚙  Using Kafka source: {KAFKA_BOOTSTRAP_SERVERS}, topic={KAFKA_TOPIC}")
 
     kafka_schema = StructType([
@@ -395,7 +469,11 @@ else:
         for label in ["NORMAL", "PNEUMONIA"]:
             label_path = data_root / label
             if label_path.exists():
-                images = [f for f in label_path.iterdir() if f.suffix.lower() in ['.jpg', '.jpeg', '.png']]
+                images = [
+                    f
+                    for f in label_path.iterdir()
+                    if f.suffix.lower() in [".jpg", ".jpeg", ".png"]
+                ]
                 data.extend([(str(img), label) for img in images])
                 print(f"  {label}: {len(images):,} images")
         return data
@@ -695,11 +773,38 @@ for idx, size in enumerate(test_sizes):
     # -------------------- SAVE RAW PREDICTIONS --------------------
 
     print(f"Saving predictions (reports) for {run_label}...")
+
+    # Always save locally under SCRATCH_DIR / outputs
     results_df.write.mode("overwrite").parquet(str(RESULTS_DIR / "predictions.parquet"))
     pdf = results_df.toPandas()
     pdf.to_csv(RESULTS_DIR / "predictions.csv", index=False)
-    pdf.to_json(RESULTS_DIR / "predictions.json", orient='records', lines=True)
-    print("✅ Saved\n")
+    pdf.to_json(RESULTS_DIR / "predictions.json", orient="records", lines=True)
+    print("✅ Local results saved")
+
+    # Optionally mirror predictions to S3, similar to the S3 notebook.
+    if USE_S3_RESULTS:
+        if not S3_RESULTS_PREFIX:
+            print("⚠️  USE_S3_RESULTS is True but S3_RESULTS_PREFIX is not set; skipping S3 write.")
+        else:
+            # E.g. s3a://bucket/medgemma-results/run_001_20imgs/predictions_parquet/
+            s3_run_base = f"{S3_RESULTS_PREFIX}/{run_label}"
+            s3_parquet_path = f"{s3_run_base}/predictions_parquet/"
+            s3_csv_path = f"{s3_run_base}/predictions_csv/"
+
+            print(f"Saving predictions to S3 (Parquet): {s3_parquet_path}")
+            results_df.write.mode("overwrite").parquet(s3_parquet_path)
+
+            print(f"Saving predictions to S3 (CSV): {s3_csv_path}")
+            (
+                results_df.coalesce(1)
+                .write.mode("overwrite")
+                .option("header", "true")
+                .csv(s3_csv_path)
+            )
+
+            print("✅ S3 results saved\n")
+    else:
+        print("ℹ️  USE_S3_RESULTS is False — skipping S3 results write.\n")
 
     # -------------------- ANALYTICS --------------------
 
@@ -750,7 +855,26 @@ for idx, size in enumerate(test_sizes):
     for name, df in analytics.items():
         df.to_csv(METRICS_DIR / f"{name}.csv", index=False)
 
-    print(f"✅ {len(analytics)} analytics saved for {run_label}\n")
+    print(f"✅ {len(analytics)} analytics saved for {run_label}")
+
+    # Optionally mirror metrics to S3 alongside predictions.
+    if USE_S3_RESULTS:
+        if not S3_RESULTS_PREFIX:
+            print("⚠️  USE_S3_RESULTS is True but S3_RESULTS_PREFIX is not set; skipping S3 metrics write.")
+        else:
+            s3_run_base = f"{S3_RESULTS_PREFIX}/{run_label}"
+            s3_metrics_base = f"{s3_run_base}/metrics/"
+            print(f"Saving metrics CSVs to S3 under: {s3_metrics_base}")
+            for name in analytics.keys():
+                local_path = METRICS_DIR / f"{name}.csv"
+                # Use Spark to write each metric CSV to S3 for simplicity.
+                metrics_df = spark.read.option("header", "true").csv(str(local_path))
+                metrics_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(
+                    f"{s3_metrics_base}{name}/"
+                )
+            print("✅ S3 metrics saved\n")
+    else:
+        print("ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.\n")
 
     # -------------------- VISUALIZATIONS --------------------
 
@@ -803,7 +927,44 @@ for idx, size in enumerate(test_sizes):
     else:
         print("⚠️  Skipping report length chart (no successful reports)")
 
-    print(f"✅ Visualizations saved for {run_label}\n")
+    print(f"✅ Visualizations saved for {run_label}")
+
+    # Optionally mirror visualizations to S3 as well (upload PNGs).
+    if USE_S3_RESULTS:
+        if not S3_RESULTS_PREFIX:
+            print("⚠️  USE_S3_RESULTS is True but S3_RESULTS_PREFIX is not set; skipping S3 visualization write.")
+        else:
+            import boto3
+            from botocore.exceptions import ClientError
+
+            s3_run_base = f"{S3_RESULTS_PREFIX}/{run_label}"
+            s3_viz_base = f"{s3_run_base}/visualizations/"
+
+            # Parse bucket and prefix from s3a://bucket/prefix
+            bucket = s3_viz_base.replace("s3a://", "").split("/", 1)[0]
+            base_prefix = s3_viz_base.replace("s3a://", "").split("/", 1)[1] if "/" in s3_viz_base.replace("s3a://", "") else ""
+
+            print(f"Saving visualizations to S3 under: s3://{bucket}/{base_prefix}")
+
+            s3_client = boto3.client(
+                "s3",
+                aws_access_key_id=AWS_ACCESS_KEY,
+                aws_secret_access_key=AWS_SECRET_KEY,
+                region_name=AWS_REGION,
+            )
+
+            # Upload each PNG in the local visualization directory
+            for file_path in VIZ_DIR.glob("*.png"):
+                key = f"{base_prefix}{file_path.name}" if base_prefix.endswith("/") or base_prefix == "" else f"{base_prefix}/{file_path.name}"
+                try:
+                    s3_client.upload_file(str(file_path), bucket, key)
+                    print(f"  ✅ Uploaded {file_path.name} -> s3://{bucket}/{key}")
+                except ClientError as e:
+                    print(f"  ❌ Failed to upload {file_path.name}: {e}")
+
+            print("✅ S3 visualizations upload complete\n")
+    else:
+        print("ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.\n")
 
     # -------------------- REPORT (PER-RUN) --------------------
 
