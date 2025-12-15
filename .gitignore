@@ -1,0 +1,9 @@
+data/
+hf_cache/
+kafka_2.13-3.8.0/
+logs/
+medgemma_env/
+outputs/
+results/
+test/
+*.tgz
