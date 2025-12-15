@@ -264,6 +264,321 @@ def auto_tune_spark_partitions(num_images: int,
     n_parts = max(1, min(base_partitions, ideal_parts))
     return n_parts
 
+# ============================================================================
+# VISUALIZATION FUNCTIONS
+# ============================================================================
+
+def create_scalability_comparison(summary_csv_path, output_dir):
+    """Compare throughput/latency across different load sizes"""
+    from pathlib import Path
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    
+    if not Path(summary_csv_path).exists():
+        print("  ⚠️  Summary CSV not found")
+        return
+    
+    df = pd.read_csv(summary_csv_path)
+    if len(df) == 0:
+        return
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+    colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c']
+    
+    # Throughput
+    ax1.bar(df['num_images'], df['wall_throughput_img_per_sec'], 
+            color=colors[:len(df)], edgecolor='black', linewidth=1.5)
+    ax1.set_xlabel('Number of Images', fontsize=13, fontweight='bold')
+    ax1.set_ylabel('Throughput (images/sec)', fontsize=13, fontweight='bold')
+    ax1.set_title('Scalability: Throughput vs Load Size', fontsize=15, fontweight='bold')
+    ax1.grid(axis='y', alpha=0.3)
+    
+    for i, row in df.iterrows():
+        if pd.notna(row['wall_throughput_img_per_sec']):
+            ax1.text(row['num_images'], row['wall_throughput_img_per_sec'], 
+                    f"{row['wall_throughput_img_per_sec']:.2f}", 
+                    ha='center', va='bottom', fontweight='bold')
+    
+    # Latency
+    if 'mean_latency_ms' in df.columns:
+        ax2.bar(df['num_images'], df['mean_latency_ms'], 
+                color=colors[:len(df)], edgecolor='black', linewidth=1.5)
+        ax2.set_xlabel('Number of Images', fontsize=13, fontweight='bold')
+        ax2.set_ylabel('Mean Latency (ms)', fontsize=13, fontweight='bold')
+        ax2.set_title('Scalability: Latency vs Load Size', fontsize=15, fontweight='bold')
+        ax2.grid(axis='y', alpha=0.3)
+        
+        for i, row in df.iterrows():
+            if pd.notna(row['mean_latency_ms']):
+                ax2.text(row['num_images'], row['mean_latency_ms'], 
+                        f"{row['mean_latency_ms']:.0f}", 
+                        ha='center', va='bottom', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig(Path(output_dir) / 'scalability_comparison.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"  ✅ Scalability comparison saved")
+
+
+def create_timeline_visualization(results_df, output_dir):
+    """Timeline scatter plot showing latency over time"""
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    from pathlib import Path
+    
+    pdf = results_df.select("timestamp", "inference_time_ms", "gpu_used").toPandas()
+    if len(pdf) == 0:
+        return
+    
+    pdf['timestamp'] = pd.to_datetime(pdf['timestamp'])
+    pdf = pdf.sort_values('timestamp')
+    start_time = pdf['timestamp'].min()
+    pdf['elapsed_sec'] = (pdf['timestamp'] - start_time).dt.total_seconds()
+    
+    fig, ax = plt.subplots(figsize=(14, 6))
+    
+    if pdf['gpu_used'].nunique() > 1:
+        for gpu in pdf['gpu_used'].unique():
+            gpu_data = pdf[pdf['gpu_used'] == gpu]
+            ax.scatter(gpu_data['elapsed_sec'], gpu_data['inference_time_ms'], 
+                      alpha=0.6, s=50, label=gpu)
+        ax.legend()
+    else:
+        ax.scatter(pdf['elapsed_sec'], pdf['inference_time_ms'], 
+                  alpha=0.6, s=50, color='#3498db')
+    
+    ax.set_xlabel('Time Elapsed (seconds)', fontsize=13, fontweight='bold')
+    ax.set_ylabel('Inference Time (ms)', fontsize=13, fontweight='bold')
+    ax.set_title('Processing Timeline: Latency Over Time', fontsize=15, fontweight='bold')
+    ax.grid(True, alpha=0.3)
+    
+    mean_latency = pdf['inference_time_ms'].mean()
+    ax.axhline(mean_latency, color='red', linestyle='--', linewidth=2, 
+              label=f'Mean: {mean_latency:.1f}ms')
+    ax.legend()
+    
+    plt.tight_layout()
+    plt.savefig(Path(output_dir) / 'processing_timeline.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"  ✅ Timeline saved")
+
+
+def create_gpu_utilization_chart(results_df, output_dir):
+    """GPU workload distribution pie + bar charts"""
+    import matplotlib.pyplot as plt
+    from pathlib import Path
+    
+    pdf = results_df.select("gpu_used").toPandas()
+    if len(pdf) == 0:
+        return
+    
+    gpu_counts = pdf['gpu_used'].value_counts()
+    if len(gpu_counts) == 0:
+        return
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#1abc9c']
+    
+    ax1.pie(gpu_counts.values, labels=gpu_counts.index, autopct='%1.1f%%',
+           colors=colors[:len(gpu_counts)], startangle=90)
+    ax1.set_title('GPU Workload Distribution (%)', fontsize=14, fontweight='bold')
+    
+    ax2.bar(range(len(gpu_counts)), gpu_counts.values, color=colors[:len(gpu_counts)],
+           edgecolor='black', linewidth=1.5)
+    ax2.set_xlabel('GPU', fontsize=13, fontweight='bold')
+    ax2.set_ylabel('Number of Images', fontsize=13, fontweight='bold')
+    ax2.set_title('GPU Workload Distribution (Count)', fontsize=14, fontweight='bold')
+    ax2.set_xticks(range(len(gpu_counts)))
+    ax2.set_xticklabels([g.split('-')[0] if '-' in g else g for g in gpu_counts.index], 
+                        rotation=45, ha='right')
+    
+    for i, v in enumerate(gpu_counts.values):
+        ax2.text(i, v, str(v), ha='center', va='bottom', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig(Path(output_dir) / 'gpu_utilization.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"  ✅ GPU utilization saved")
+
+
+def create_comprehensive_dashboard(results_df, analytics, output_dir):
+    """All-in-one dashboard with latency, throughput, and performance metrics"""
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    from pathlib import Path
+    
+    fig = plt.figure(figsize=(18, 12))
+    gs = fig.add_gridspec(3, 3, hspace=0.3, wspace=0.3)
+    
+    # 1. Latency percentiles
+    ax1 = fig.add_subplot(gs[0, 0])
+    lat = analytics['latency_statistics']
+    if len(lat) > 0 and lat['mean_ms'].notna().any():
+        labels = ['Mean', 'P50', 'P95', 'P99']
+        values = [lat['mean_ms'].values[0], lat['p50_ms'].values[0], 
+                 lat['p95_ms'].values[0], lat['p99_ms'].values[0]]
+        colors = ['#3498db', '#2ecc71', '#e67e22', '#e74c3c']
+        bars = ax1.bar(labels, values, color=colors, edgecolor='black')
+        ax1.set_ylabel('Milliseconds', fontweight='bold')
+        ax1.set_title('Latency Percentiles', fontweight='bold')
+        for bar in bars:
+            height = bar.get_height()
+            ax1.text(bar.get_x() + bar.get_width()/2., height, 
+                    f'{height:.0f}', ha='center', va='bottom')
+    
+    # 2. Throughput
+    ax2 = fig.add_subplot(gs[0, 1])
+    tp = analytics['throughput_metrics']
+    if len(tp) > 0:
+        throughput = tp['throughput_img_per_sec'].values[0]
+        ax2.text(0.5, 0.5, f'{throughput:.2f}\nimages/sec', 
+                ha='center', va='center', fontsize=28, fontweight='bold',
+                bbox=dict(boxstyle='round', facecolor='#3498db', alpha=0.3))
+        ax2.set_xlim(0, 1)
+        ax2.set_ylim(0, 1)
+        ax2.axis('off')
+        ax2.set_title('Throughput', fontweight='bold')
+    
+    # 3. Success rate
+    ax3 = fig.add_subplot(gs[0, 2])
+    err = analytics['error_statistics']
+    if len(err) > 0:
+        success_row = err[err['status'] == 'Success']
+        if len(success_row) > 0:
+            success_pct = success_row['percentage'].values[0]
+            ax3.pie([success_pct, 100-success_pct], 
+                   colors=['#2ecc71', '#e74c3c'],
+                   startangle=90, autopct='%1.1f%%')
+            ax3.set_title('Success Rate', fontweight='bold')
+    
+    # 4. Report length
+    ax4 = fig.add_subplot(gs[1, 0])
+    pdf_len = results_df.select("report_text", "error_message").toPandas()
+    pdf_len = pdf_len[pdf_len["error_message"].isna()]
+    if len(pdf_len) > 0:
+        pdf_len["report_len"] = pdf_len["report_text"].str.len()
+        ax4.hist(pdf_len["report_len"], bins=20, color='#9b59b6', alpha=0.7, edgecolor='black')
+        ax4.set_xlabel('Characters', fontweight='bold')
+        ax4.set_ylabel('Count', fontweight='bold')
+        ax4.set_title('Report Length', fontweight='bold')
+    
+    # 5. Timeline
+    ax5 = fig.add_subplot(gs[1, 1:])
+    pdf = results_df.select("timestamp", "inference_time_ms").toPandas()
+    pdf['timestamp'] = pd.to_datetime(pdf['timestamp'])
+    pdf = pdf.sort_values('timestamp')
+    if len(pdf) > 0:
+        start_time = pdf['timestamp'].min()
+        pdf['elapsed_sec'] = (pdf['timestamp'] - start_time).dt.total_seconds()
+        ax5.scatter(pdf['elapsed_sec'], pdf['inference_time_ms'], alpha=0.5, s=30, color='#3498db')
+        ax5.set_xlabel('Time Elapsed (sec)', fontweight='bold')
+        ax5.set_ylabel('Latency (ms)', fontweight='bold')
+        ax5.set_title('Processing Timeline', fontweight='bold')
+        ax5.grid(True, alpha=0.3)
+    
+    # 6. Summary
+    ax6 = fig.add_subplot(gs[2, :])
+    ax6.axis('off')
+    summary_text = [
+        f"Mean Latency: {lat['mean_ms'].values[0]:.1f} ms",
+        f"P95 Latency: {lat['p95_ms'].values[0]:.1f} ms",
+        f"Throughput: {throughput:.2f} img/s",
+        f"Total Images: {int(tp['total_images'].values[0])}"
+    ]
+    ax6.text(0.5, 0.5, '\n'.join(summary_text), 
+            ha='center', va='center', fontsize=14, fontweight='bold',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    
+    plt.suptitle('MedGemma Performance Dashboard', fontsize=18, fontweight='bold', y=0.98)
+    plt.savefig(Path(output_dir) / 'comprehensive_dashboard.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"  ✅ Dashboard saved")
+
+
+def create_xray_report_visualization(results_df, output_dir, num_samples=10):
+    """HTML gallery showing X-rays side-by-side with AI reports"""
+    from PIL import Image
+    import base64
+    from io import BytesIO
+    from pathlib import Path
+    import pandas as pd
+    
+    print(f"  Creating X-ray + Report gallery ({num_samples} samples)...")
+    
+    sample_df = results_df.limit(num_samples)
+    pdf = sample_df.toPandas()
+    
+    html_template = """<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>MedGemma Results</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:20px;margin:0}
+.container{max-width:1400px;margin:0 auto;background:white;border-radius:10px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,0.3)}
+h1{text-align:center;color:#2c3e50;font-size:36px;margin-bottom:10px}
+.subtitle{text-align:center;color:gray;font-size:16px;margin-bottom:40px}
+.sample-card{border:2px solid #e0e0e0;border-radius:8px;margin-bottom:30px;padding:20px;background:#fafafa;display:flex;gap:20px}
+.xray-section{flex:0 0 400px}
+.xray-img{width:100%;border-radius:5px;box-shadow:0 4px 8px rgba(0,0,0,0.2)}
+.xray-label{margin-top:10px;padding:8px;background:#3498db;color:white;text-align:center;border-radius:5px;font-weight:bold}
+.report-section{flex:1;display:flex;flex-direction:column}
+.report-header{background:#34495e;color:white;padding:12px;border-radius:5px 5px 0 0;font-weight:bold;font-size:18px}
+.report-content{background:white;padding:20px;border:1px solid #ddd;border-top:none;border-radius:0 0 5px 5px;white-space:pre-wrap;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;flex:1;overflow-y:auto;max-height:400px}
+.metrics-bar{display:flex;gap:15px;margin-top:15px;padding:12px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:5px;color:white}
+.metric-item{flex:1;text-align:center}
+.metric-label{font-size:11px;opacity:0.9;margin-bottom:5px}
+.metric-value{font-size:18px;font-weight:bold}
+.sample-number{background:#e74c3c;color:white;padding:5px 15px;border-radius:20px;font-weight:bold;display:inline-block;margin-bottom:15px}
+</style></head><body>
+<div class="container">
+<h1>🏥 MedGemma Report Generation Results</h1>
+<div class="subtitle">AI-Powered Chest X-ray Analysis - Showing {num_samples} Samples</div>
+{samples_html}
+</div></body></html>"""
+    
+    samples_html = []
+    for idx, row in pdf.iterrows():
+        try:
+            img = Image.open(row['file_path']).convert('RGB')
+            img.thumbnail((400, 400), Image.Resampling.LANCZOS)
+            buffered = BytesIO()
+            img.save(buffered, format="PNG")
+            img_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
+            
+            report = row['report_text'] if pd.notna(row['report_text']) else "Error"
+            latency = f"{row['inference_time_ms']:.1f} ms" if pd.notna(row['inference_time_ms']) else "N/A"
+            gpu = row['gpu_used'] if pd.notna(row['gpu_used']) else "Unknown"
+            label = row['true_label'] if pd.notna(row['true_label']) else "Unknown"
+            chars = len(report)
+            
+            sample_html = f"""
+<div class="sample-card">
+<div class="xray-section">
+<span class="sample-number">Sample {idx + 1}</span>
+<img class="xray-img" src="data:image/png;base64,{img_base64}">
+<div class="xray-label">Ground Truth: {label}</div>
+</div>
+<div class="report-section">
+<div class="report-header">📋 AI-Generated Report</div>
+<div class="report-content">{report}</div>
+<div class="metrics-bar">
+<div class="metric-item"><div class="metric-label">⏱️ LATENCY</div><div class="metric-value">{latency}</div></div>
+<div class="metric-item"><div class="metric-label">📊 GPU</div><div class="metric-value">{gpu.split('-')[0] if '-' in gpu else gpu}</div></div>
+<div class="metric-item"><div class="metric-label">📝 LENGTH</div><div class="metric-value">{chars} chars</div></div>
+</div></div></div>"""
+            samples_html.append(sample_html)
+        except Exception as e:
+            print(f"    ⚠️  Error: {e}")
+            continue
+    
+    final_html = html_template.replace('{samples_html}', '\n'.join(samples_html))
+    final_html = final_html.replace('{num_samples}', str(num_samples))
+    
+    output_path = Path(output_dir) / "xray_reports_visualization.html"
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(final_html)
+    
+    print(f"  ✅ HTML gallery saved: {output_path}")
+    return output_path
+
 
 # Decide MAX_PARTITIONS_PER_GPU and GPU_BATCH_SIZE now
 max_partitions_per_gpu = estimate_max_partitions_per_gpu(gpu_info, MODEL_SIZE_GB)
@@ -804,6 +1119,19 @@ for idx, size in enumerate(test_sizes):
         print("⚠️  Skipping report length chart (no successful reports)")
 
     print(f"✅ Visualizations saved for {run_label}\n")
+        # Additional visualizations
+    print(f"Creating additional visualizations for {run_label}...")
+    
+    try:
+        create_timeline_visualization(results_df, VIZ_DIR)
+        create_gpu_utilization_chart(results_df, VIZ_DIR)
+        create_comprehensive_dashboard(results_df, analytics, VIZ_DIR)
+        create_xray_report_visualization(results_df, VIZ_DIR, num_samples=10)
+    except Exception as e:
+        print(f"⚠️  Visualization error: {e}")
+    
+    print(f"✅ Additional visualizations complete\n")
+
 
     # -------------------- REPORT (PER-RUN) --------------------
 
@@ -932,12 +1260,23 @@ for _, row in summary_df.iterrows():
             "time_to_clear_min": time_to_clear_sec / 60.0,
         })
 
+print("\n" + "="*70)
+print("Creating cross-run scalability comparison...")
+print("="*70)
+
+try:
+    create_scalability_comparison(summary_path, VIZ_ROOT)
+    print("✅ Scalability comparison complete!")
+except Exception as e:
+    print(f"⚠️  Error: {e}")
+
 if queue_records:
     queue_df = pd.DataFrame(queue_records)
     queue_path = Path(OUTPUT_DIR) / "queue_simulation_summary.csv"
     queue_df.to_csv(queue_path, index=False)
     print(f"\n📊 Queue simulation written to: {queue_path}")
     print(queue_df.head())
+
 
 print("="*70)
 print("✅✅✅ LOAD-TEST COMPLETE! ✅✅✅")
