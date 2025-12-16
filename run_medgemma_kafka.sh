@@ -307,19 +307,23 @@ spark-submit \
   --packages "${SPARK_PACKAGES}" \
   --conf "spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem" \
   --conf "spark.hadoop.fs.s3a.aws.credentials.provider=com.amazonaws.auth.DefaultAWSCredentialsProviderChain" \
-  --conf "spark.hadoop.fs.s3a.access.key=${AWS_ACCESS_KEY_ID:-}" \
-  --conf "spark.hadoop.fs.s3a.secret.key=${AWS_SECRET_ACCESS_KEY:-}" \
-  --conf "spark.hadoop.fs.s3a.endpoint=s3.${AWS_REGION:-us-east-1}.amazonaws.com" \
   --conf "spark.hadoop.fs.s3a.connection.timeout=60000" \
   --conf "spark.hadoop.fs.s3a.connection.establish.timeout=60000" \
   --conf "spark.hadoop.fs.s3a.socket.timeout=60000" \
   --conf "spark.hadoop.fs.s3a.paging.maximum=5000" \
   --conf "spark.hadoop.fs.s3a.threads.max=64" \
   --conf "spark.hadoop.fs.s3a.connection.maximum=64" \
+  --conf "fs.s3a.connection.timeout=60000" \
+  --conf "fs.s3a.connection.establish.timeout=60000" \
+  --conf "fs.s3a.socket.timeout=60000" \
+  --conf "fs.s3a.paging.maximum=5000" \
+  --conf "fs.s3a.threads.max=64" \
+  --conf "fs.s3a.connection.maximum=64" \
   "${PIPELINE_PY}" \
   --use-kafka \
   --bootstrap "${LISTEN_HOST}:${KAFKA_PORT}" \
   --topic "${TOPIC}"
+
 
 log "Pipeline finished successfully."
 log "Done."

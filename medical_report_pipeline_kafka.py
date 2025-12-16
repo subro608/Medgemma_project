@@ -297,6 +297,8 @@ builder = (
     .config("spark.sql.execution.arrow.pyspark.enabled", "true")
 )
 
+
+# -----------------------------------------------------------------------------------
 # S3 integration for datalake + results
 if USE_S3_DATALAKE or USE_S3_RESULTS:
     if AWS_ACCESS_KEY and AWS_SECRET_KEY:
@@ -315,6 +317,18 @@ if USE_S3_DATALAKE or USE_S3_RESULTS:
 spark = builder.getOrCreate()
 print(f"✅ Spark v{spark.version} initialized\n")
 
+keys = [
+    "fs.s3a.connection.timeout",
+    "fs.s3a.connection.establish.timeout",
+    "fs.s3a.socket.timeout",
+    "spark.hadoop.fs.s3a.connection.timeout",
+    "spark.hadoop.fs.s3a.connection.establish.timeout",
+    "spark.hadoop.fs.s3a.socket.timeout",
+]
+hc = spark.sparkContext._jsc.hadoopConfiguration()
+for k in keys:
+    v = hc.get(k)
+    print(f"[S3A CONF] {k} = {v}")
 # ============================================================================
 # INPUT: Kafka requests + S3 data lake join
 # ============================================================================
@@ -443,17 +457,22 @@ prediction_schema = StructType([
 # ============================================================================
 # INFERENCE FUNCTION (uses S3 content bytes if present)
 # ============================================================================
-
 def parse_iso(ts: str) -> datetime:
-    """Robust-ish ISO parse for both '...Z' and '+00:00' forms."""
+    """Parse ISO timestamps and always return a UTC-aware datetime."""
     ts = (ts or "").strip()
     if ts.endswith("Z"):
         ts = ts[:-1] + "+00:00"
     try:
-        return datetime.fromisoformat(ts)
+        dt = datetime.fromisoformat(ts)
     except Exception:
-        # fallback: treat as UTC now if parse fails
         return datetime.now(timezone.utc)
+
+    # If timestamp is naive, assume it's UTC and attach tzinfo.
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    else:
+        dt = dt.astimezone(timezone.utc)
+    return dt
 
 
 def predict_batch(iterator: Iterator[pd.DataFrame]) -> Iterator[pd.DataFrame]:
