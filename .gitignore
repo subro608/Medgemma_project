@@ -8,3 +8,15 @@ results/
 test/
 *.tgz
 .env
+# Jupyter
+.ipynb_checkpoints/
+
+# Kafka runtime state
+kafka_state/
+
+# Python
+__pycache__/
+*.pyc
+
+# Env / secrets
+.env
