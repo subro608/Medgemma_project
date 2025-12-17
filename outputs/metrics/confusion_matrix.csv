@@ -1,0 +1,3 @@
+true_label,predicted_label,count
+NORMAL,NORMAL,19
+NORMAL,PNEUMONIA,1

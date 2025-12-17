@@ -1,0 +1,1172 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/17 04:48:41 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 4) / 4]                                                                                [Stage 14:>                                                         (0 + 1) / 1]/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+
+[Worker-1191242] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1191242] Loading model...
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.24s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.82s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.88s/it]
+[Worker-1191242] ✅ Model loaded in 7.55s
+
+[Worker-1191242] Batch 1: 20 images
+[Worker-1191242]   4/20
+[Worker-1191242]   8/20
+[Stage 14:>                                                         (0 + 1) / 1][Worker-1191242]   12/20
+[Worker-1191242]   16/20
+[Worker-1191242]   20/20
+[Worker-1191242] ✅ Batch 1 done in 97.14s
+
+                                                                                25/12/17 04:50:44 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:50:44 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:50:44 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:50:44 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:50:44 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+
+[Worker-1191242] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1191242] Loading model...
+[Stage 62:>                                                         (0 + 1) / 1]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.25s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.83s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.89s/it]
+[Worker-1191242] ✅ Model loaded in 7.52s
+
+[Worker-1191242] Batch 1: 50 images
+[Worker-1191242]   4/50
+[Worker-1191242]   8/50
+[Stage 62:>                                                         (0 + 1) / 1][Worker-1191242]   12/50
+[Worker-1191242]   16/50
+[Worker-1191242]   20/50
+[Stage 62:>                                                         (0 + 1) / 1][Worker-1191242]   24/50
+[Worker-1191242]   28/50
+[Worker-1191242]   32/50
+[Stage 62:>                                                         (0 + 1) / 1][Worker-1191242]   36/50
+[Worker-1191242]   40/50
+[Worker-1191242]   44/50
+[Stage 62:>                                                         (0 + 1) / 1][Worker-1191242]   48/50
+[Worker-1191242] ✅ Batch 1 done in 254.50s
+
+                                                                                25/12/17 04:55:11 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:55:11 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:55:11 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:55:11 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:55:11 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+
+[Worker-1191242] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1191242] Loading model...
+[Stage 110:>                                                        (0 + 1) / 1]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.25s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.82s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.88s/it]
+[Worker-1191242] ✅ Model loaded in 7.28s
+
+[Worker-1191242] Batch 1: 100 images
+[Worker-1191242]   4/100
+[Worker-1191242]   8/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   12/100
+[Worker-1191242]   16/100
+[Worker-1191242]   20/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   24/100
+[Worker-1191242]   28/100
+[Worker-1191242]   32/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   36/100
+[Worker-1191242]   40/100
+[Worker-1191242]   44/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   48/100
+[Worker-1191242]   52/100
+[Worker-1191242]   56/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   60/100
+[Worker-1191242]   64/100
+[Worker-1191242]   68/100
+[Worker-1191242]   72/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   76/100
+[Worker-1191242]   80/100
+[Worker-1191242]   84/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   88/100
+[Worker-1191242]   92/100
+[Worker-1191242]   96/100
+[Stage 110:>                                                        (0 + 1) / 1][Worker-1191242]   100/100
+[Worker-1191242] ✅ Batch 1 done in 491.71s
+
+                                                                                ============================================================
+SCALING TEST
+============================================================
+Test sizes: [20, 50, 100, 200, 500, 1000] images
+Estimated time: 2-3 hours
+============================================================
+✅ Imports successful
+
+✅ Directories created
+
+✅ Credentials configured
+
+======================================================================
+DATASET SETUP
+======================================================================
+✅ Already downloaded
+
+✅ Dataset organized:
+   NORMAL: 1,583
+   PNEUMONIA: 4,273
+   TOTAL: 5,856
+
+======================================================================
+GPU INFORMATION
+======================================================================
+  GPU 0: NVIDIA A100-SXM4-80GB (79.2 GB)
+======================================================================
+
+⚙  Auto-tuner: max_partitions_per_gpu = 4
+⚙  Auto-tuner: GPU_BATCH_SIZE = 4
+======================================================================
+
+✅ SETUP COMPLETE
+
+⚠️  IMPORTANT: Accept model terms at https://huggingface.co/google/medgemma-4b-it
+
+📋 Next: pipeline will run load-test experiments
+
+
+======================================================================
+STARTING PIPELINE
+======================================================================
+Start: 2025-12-17 04:48:31
+======================================================================
+
+✅ Spark will use: /scratch/vsp7230/miniconda3/envs/torch121/bin/python
+
+Initializing Spark...
+Using base_partitions = 4 (cpu_limit=32, gpu_count=1)
+✅ Spark v3.5.0 initialized
+
+Building input DataFrame...
+⚙  Using filesystem scan from organized dataset
+  NORMAL: 1,583 images
+  PNEUMONIA: 4,273 images
+✅ Total: 5,856 images discovered
+
+⚠️  LOAD-TEST MODE: will run experiments with image counts: [20, 50, 100, 200, 500, 1000]
+
+
+======================================================================
+RUN 1/6 — 20 IMAGES  (run_001_20imgs)
+======================================================================
+
+✅ DataFrame for run_001_20imgs: 20 images, 1 partitions
+
+======================================================================
+RUNNING INFERENCE — run_001_20imgs
+======================================================================
+Images: 20 | GPUs: 1 | Partitions: 1
+======================================================================
+
+
+======================================================================
+✅ INFERENCE DONE — run_001_20imgs
+======================================================================
+Processed: 20
+Time: 117.24s (1.95 min)
+Throughput (wall-clock): 0.17 img/s
+======================================================================
+
+Saving predictions (reports) for run_001_20imgs...
+✅ Local results saved
+ℹ️  USE_S3_RESULTS is False — skipping S3 results write.
+
+Computing analytics for run_001_20imgs...
+✅ 4 analytics saved for run_001_20imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.
+
+Creating visualizations for run_001_20imgs...
+  ✅ GPU utilization saved
+  ✅ Dashboard saved
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_001_20imgs/xray_reports_visualization.html
+✅ Visualizations saved for run_001_20imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.
+
+Generating report for run_001_20imgs...
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_001_20imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 04:50:48
+  Duration (wall-clock for inference): 1.95 minutes
+  Image Count: 20
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 20
+
+RESULTS:
+  Successful reports: 20
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 4856.32 ms
+  P95 Latency:  5168.66 ms
+
+  Throughput (per-image latency-based): 0.21 images/sec
+  Daily Capacity (theoretical): 18,144 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_001_20imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_001_20imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_001_20imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
+
+
+======================================================================
+RUN 2/6 — 50 IMAGES  (run_002_50imgs)
+======================================================================
+
+✅ DataFrame for run_002_50imgs: 50 images, 1 partitions
+
+======================================================================
+RUNNING INFERENCE — run_002_50imgs
+======================================================================
+Images: 50 | GPUs: 1 | Partitions: 1
+======================================================================
+
+
+======================================================================
+✅ INFERENCE DONE — run_002_50imgs
+======================================================================
+Processed: 50
+Time: 262.46s (4.37 min)
+Throughput (wall-clock): 0.19 img/s
+======================================================================
+
+Saving predictions (reports) for run_002_50imgs...
+✅ Local results saved
+ℹ️  USE_S3_RESULTS is False — skipping S3 results write.
+
+Computing analytics for run_002_50imgs...
+✅ 4 analytics saved for run_002_50imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.
+
+Creating visualizations for run_002_50imgs...
+  ✅ GPU utilization saved
+  ✅ Dashboard saved
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_002_50imgs/xray_reports_visualization.html
+✅ Visualizations saved for run_002_50imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.
+
+Generating report for run_002_50imgs...
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_002_50imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 04:55:15
+  Duration (wall-clock for inference): 4.37 minutes
+  Image Count: 50
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 50
+
+RESULTS:
+  Successful reports: 50
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 5088.54 ms
+  P95 Latency:  5232.04 ms
+
+  Throughput (per-image latency-based): 0.20 images/sec
+  Daily Capacity (theoretical): 17,280 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_002_50imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_002_50imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_002_50imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
+
+
+======================================================================
+RUN 3/6 — 100 IMAGES  (run_003_100imgs)
+======================================================================
+
+✅ DataFrame for run_003_100imgs: 100 images, 1 partitions
+
+======================================================================
+RUNNING INFERENCE — run_003_100imgs
+======================================================================
+Images: 100 | GPUs: 1 | Partitions: 1
+======================================================================
+
+
+======================================================================
+✅ INFERENCE DONE — run_003_100imgs
+======================================================================25/12/17 05:03:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:03:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:03:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:03:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:03:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+
+[Worker-1191242] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1191242] Loading model...
+[Stage 158:>                                                        (0 + 1) / 1]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.24s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.81s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.88s/it]
+[Worker-1191242] ✅ Model loaded in 6.93s
+
+[Worker-1191242] Batch 1: 200 images
+[Worker-1191242]   4/200
+[Worker-1191242]   8/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   12/200
+[Worker-1191242]   16/200
+[Worker-1191242]   20/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   24/200
+[Worker-1191242]   28/200
+[Worker-1191242]   32/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   36/200
+[Worker-1191242]   40/200
+[Worker-1191242]   44/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   48/200
+[Worker-1191242]   52/200
+[Worker-1191242]   56/200
+[Worker-1191242]   60/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   64/200
+[Worker-1191242]   68/200
+[Worker-1191242]   72/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   76/200
+[Worker-1191242]   80/200
+[Worker-1191242]   84/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   88/200
+[Worker-1191242]   92/200
+[Worker-1191242]   96/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   100/200
+[Worker-1191242]   104/200
+[Worker-1191242]   108/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   112/200
+[Worker-1191242]   116/200
+[Worker-1191242]   120/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   124/200
+[Worker-1191242]   128/200
+[Worker-1191242]   132/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   136/200
+[Worker-1191242]   140/200
+[Worker-1191242]   144/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   148/200
+[Worker-1191242]   152/200
+[Worker-1191242]   156/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   160/200
+[Worker-1191242]   164/200
+[Worker-1191242]   168/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   172/200
+[Worker-1191242]   176/200
+[Worker-1191242]   180/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   184/200
+[Worker-1191242]   188/200
+[Worker-1191242]   192/200
+[Stage 158:>                                                        (0 + 1) / 1][Worker-1191242]   196/200
+[Worker-1191242]   200/200
+[Worker-1191242] ✅ Batch 1 done in 982.01s
+
+                                                                                25/12/17 05:20:08 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:20:08 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:20:08 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:20:08 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:20:08 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+
+[Worker-1191242] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1191242] Loading model...
+[Stage 214:>                                                        (0 + 3) / 3]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.29s/it]/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.83s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.89s/it]
+[Worker-1191242] ✅ Model loaded in 7.24s
+
+[Worker-1191242] Batch 1: 167 images
+
+[Worker-1195813] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1195813] Loading model...
+
+[Worker-1195816] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1195816] Loading model...
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.48s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.47s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.00s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.00s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.07s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.07s/it]
+[Worker-1195813] ✅ Model loaded in 8.05s
+
+[Worker-1195816] ✅ Model loaded in 8.04s
+
+[Worker-1195813] Batch 1: 167 images
+[Worker-1195816] Batch 1: 166 images
+[Worker-1191242]   4/167
+[Worker-1195813]   4/167
+[Worker-1195816]   4/166
+[Worker-1191242]   8/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195813]   8/167
+[Worker-1195816]   8/166
+[Worker-1191242]   12/167
+[Worker-1195813]   12/167
+[Worker-1195816]   12/166
+[Worker-1191242]   16/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   16/166
+[Worker-1195813]   16/167
+[Worker-1191242]   20/167
+[Worker-1195816]   20/166
+[Worker-1191242]   24/167
+[Worker-1195813]   20/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   24/166
+[Worker-1195813]   24/167
+[Worker-1191242]   28/167
+[Worker-1195816]   28/166
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195813]   28/167
+[Worker-1191242]   32/167
+[Worker-1195816]   32/166
+[Worker-1195813]   32/167
+[Worker-1191242]   36/167
+[Worker-1195816]   36/166
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195813]   36/167
+[Worker-1191242]   40/167
+[Worker-1195816]   40/166
+[Worker-1195813]   40/167
+[Worker-1191242]   44/167
+[Worker-1195816]   44/166
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195813]   44/167
+[Worker-1191242]   48/167
+[Worker-1195816]   48/166
+[Worker-1195813]   48/167
+[Worker-1191242]   52/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   52/166
+[Worker-1195813]   52/167
+[Worker-1191242]   56/167
+[Worker-1195816]   56/166
+[Worker-1195813]   56/167
+[Worker-1191242]   60/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   60/166
+[Worker-1195813]   60/167
+[Worker-1191242]   64/167
+[Worker-1195816]   64/166
+[Worker-1195813]   64/167
+[Worker-1191242]   68/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   68/166
+[Worker-1195813]   68/167
+[Worker-1191242]   72/167
+[Worker-1195816]   72/166
+[Worker-1195813]   72/167
+[Worker-1191242]   76/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   76/166
+[Worker-1195813]   76/167
+[Worker-1191242]   80/167
+[Worker-1195816]   80/166
+[Worker-1195813]   80/167
+[Worker-1191242]   84/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   84/166
+[Worker-1195813]   84/167
+[Worker-1191242]   88/167
+[Worker-1195816]   88/166
+[Worker-1191242]   92/167
+[Worker-1195813]   88/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   92/166
+[Worker-1191242]   96/167
+[Worker-1195813]   92/167
+[Worker-1195816]   96/166
+[Worker-1191242]   100/167
+[Worker-1195813]   96/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   100/166
+[Worker-1191242]   104/167
+[Worker-1195813]   100/167
+[Worker-1195816]   104/166
+[Worker-1191242]   108/167
+[Worker-1195813]   104/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   108/166
+[Worker-1191242]   112/167
+[Worker-1195813]   108/167
+[Worker-1195816]   112/166
+[Worker-1191242]   116/167
+[Worker-1195813]   112/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   116/166
+[Worker-1191242]   120/167
+[Worker-1195813]   116/167
+[Worker-1195816]   120/166
+[Worker-1195813]   120/167
+[Worker-1191242]   124/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   124/166
+[Worker-1191242]   128/167
+[Worker-1195813]   124/167
+[Worker-1195816]   128/166
+[Worker-1195813]   128/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1191242]   132/167
+[Worker-1195816]   132/166
+[Worker-1195813]   132/167
+[Worker-1191242]   136/167
+[Worker-1191242]   140/167
+[Worker-1195816]   136/166
+[Worker-1195813]   136/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1191242]   144/167
+[Worker-1195813]   140/167
+[Worker-1195816]   140/166
+[Worker-1191242]   148/167
+[Worker-1195813]   144/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   144/166
+[Worker-1191242]   152/167
+[Worker-1195816]   148/166
+[Worker-1195813]   148/167
+[Worker-1191242]   156/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1195816]   152/166
+[Worker-1195813]   152/167
+[Worker-1191242]   160/167
+[Worker-1195816]   156/166
+[Worker-1195813]   156/167
+[Stage 214:>                                                        (0 + 3) / 3][Worker-1191242]   164/167
+[Worker-1195816]   160/166
+[Worker-1195813]   160/167
+[Worker-1191242] ✅ Batch 1 done in 1285.45s
+
+[Stage 214:===================>                                     (1 + 2) / 3][Worker-1195816]   164/166
+[Worker-1195813]   164/167
+[Worker-1195816] ✅ Batch 1 done in 1290.56s
+
+[Stage 214:======================================>                  (2 + 1) / 3][Worker-1195813] ✅ Batch 1 done in 1291.48s
+
+                                                                                25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 05:42:10 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+
+Processed: 100
+Time: 499.23s (8.32 min)
+Throughput (wall-clock): 0.20 img/s
+======================================================================
+
+Saving predictions (reports) for run_003_100imgs...
+✅ Local results saved
+ℹ️  USE_S3_RESULTS is False — skipping S3 results write.
+
+Computing analytics for run_003_100imgs...
+✅ 4 analytics saved for run_003_100imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.
+
+Creating visualizations for run_003_100imgs...
+  ✅ GPU utilization saved
+  ✅ Dashboard saved
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_003_100imgs/xray_reports_visualization.html
+✅ Visualizations saved for run_003_100imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.
+
+Generating report for run_003_100imgs...
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_003_100imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 05:03:38
+  Duration (wall-clock for inference): 8.32 minutes
+  Image Count: 100
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 100
+
+RESULTS:
+  Successful reports: 100
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 4914.96 ms
+  P95 Latency:  5228.06 ms
+
+  Throughput (per-image latency-based): 0.20 images/sec
+  Daily Capacity (theoretical): 17,280 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_003_100imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_003_100imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_003_100imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
+
+
+======================================================================
+RUN 4/6 — 200 IMAGES  (run_004_200imgs)
+======================================================================
+
+✅ DataFrame for run_004_200imgs: 200 images, 1 partitions
+
+======================================================================
+RUNNING INFERENCE — run_004_200imgs
+======================================================================
+Images: 200 | GPUs: 1 | Partitions: 1
+======================================================================
+
+
+======================================================================
+✅ INFERENCE DONE — run_004_200imgs
+======================================================================
+Processed: 200
+Time: 989.28s (16.49 min)
+Throughput (wall-clock): 0.20 img/s
+======================================================================
+
+Saving predictions (reports) for run_004_200imgs...
+✅ Local results saved
+ℹ️  USE_S3_RESULTS is False — skipping S3 results write.
+
+Computing analytics for run_004_200imgs...
+✅ 4 analytics saved for run_004_200imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.
+
+Creating visualizations for run_004_200imgs...
+  ✅ GPU utilization saved
+  ✅ Dashboard saved
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_004_200imgs/xray_reports_visualization.html
+✅ Visualizations saved for run_004_200imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.
+
+Generating report for run_004_200imgs...
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_004_200imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 05:20:12
+  Duration (wall-clock for inference): 16.49 minutes
+  Image Count: 200
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 200
+
+RESULTS:
+  Successful reports: 200
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 4907.41 ms
+  P95 Latency:  5183.85 ms
+
+  Throughput (per-image latency-based): 0.20 images/sec
+  Daily Capacity (theoretical): 17,280 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_004_200imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_004_200imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_004_200imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
+
+
+======================================================================
+RUN 5/6 — 500 IMAGES  (run_005_500imgs)
+======================================================================
+
+✅ DataFrame for run_005_500imgs: 500 images, 3 partitions
+
+======================================================================
+RUNNING INFERENCE — run_005_500imgs
+======================================================================
+Images: 500 | GPUs: 1 | Partitions: 3
+======================================================================
+
+
+======================================================================
+✅ INFERENCE DONE — run_005_500imgs
+======================================================================
+Processed: 500
+Time: 1316.24s (21.94 min)
+Throughput (wall-clock): 0.38 img/s
+======================================================================
+
+Saving predictions (reports) for run_005_500imgs...
+✅ Local results saved
+ℹ️  USE_S3_RESULTS is False — skipping S3 results write.
+
+Computing analytics for run_005_500imgs...
+✅ 4 analytics saved for run_005_500imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.
+
+Creating visualizations for run_005_500imgs...
+  ✅ GPU utilization saved
+  ✅ Dashboard saved
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_005_500imgs/xray_reports_visualization.html
+✅ Visualizations saved for run_005_500imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.
+
+Generating report for run_005_500imgs...
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_005_500imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 05:42:13
+  Duration (wall-clock for inference): 21.94 minutes
+  Image Count: 500
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 500
+
+RESULTS:
+  Successful reports: 500
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 7732.95 ms
+  P95 Latency:  8188.74 ms
+
+  Throughput (per-image latency-based): 0.13 images/sec
+  Daily Capacity (theoretical): 11,232 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_005_500imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_005_500imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_005_500imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
+
+
+======================================================================
+RUN 6/6 — 1000 IMAGES  (run_006_1000imgs)
+======================================================================
+
+✅ DataFrame for run_006_1000imgs: 1,000 images, 4 partitions
+
+======================================================================
+RUNNING INFERENCE — run_006_1000imgs
+======================================================================
+[Worker-1191242] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1191242] Loading model...
+
+[Worker-1195813] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1195813] Loading model...
+
+[Worker-1195816] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1195816] Loading model...
+[Stage 301:>                                                        (0 + 4) / 4]/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+[Worker-1198207] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1198207] Loading model...
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.37s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.42s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.44s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.92s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.99s/it]
+[Worker-1191242] ✅ Model loaded in 7.37s
+
+[Worker-1191242] Batch 1: 250 images
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  1.97s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.04s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  1.98s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.05s/it]
+[Worker-1195816] ✅ Model loaded in 8.21s
+
+[Worker-1195816] Batch 1: 250 images
+[Worker-1195813] ✅ Model loaded in 8.23s
+
+[Worker-1195813] Batch 1: 250 images
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.91s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.72s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.90s/it]
+[Worker-1198207] ✅ Model loaded in 9.73s
+
+[Worker-1198207] Batch 1: 250 images
+[Worker-1191242]   4/250
+[Worker-1195813]   4/250
+[Worker-1195816]   4/250
+[Worker-1198207]   4/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1191242]   8/250
+[Worker-1195813]   8/250
+[Worker-1195816]   8/250
+[Worker-1198207]   8/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   12/250
+[Worker-1191242]   12/250
+[Worker-1195816]   12/250
+[Worker-1198207]   12/250
+[Worker-1195813]   16/250
+[Worker-1195816]   16/250
+[Worker-1191242]   16/250
+[Worker-1198207]   16/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   20/250
+[Worker-1195816]   20/250
+[Worker-1191242]   20/250
+[Worker-1198207]   20/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   24/250
+[Worker-1195813]   24/250
+[Worker-1191242]   24/250
+[Worker-1198207]   24/250
+[Worker-1195813]   28/250
+[Worker-1195816]   28/250
+[Worker-1191242]   28/250
+[Worker-1198207]   28/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   32/250
+[Worker-1195816]   32/250
+[Worker-1191242]   32/250
+[Worker-1198207]   32/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   36/250
+[Worker-1195816]   36/250
+[Worker-1191242]   36/250
+[Worker-1198207]   36/250
+[Worker-1195813]   40/250
+[Worker-1195816]   40/250
+[Worker-1191242]   40/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   40/250
+[Worker-1195813]   44/250
+[Worker-1195816]   44/250
+[Worker-1191242]   44/250
+[Worker-1198207]   44/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   48/250
+[Worker-1195816]   48/250
+[Worker-1191242]   48/250
+[Worker-1198207]   48/250
+[Worker-1195813]   52/250
+[Worker-1195816]   52/250
+[Worker-1191242]   52/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   52/250
+[Worker-1195813]   56/250
+[Worker-1195816]   56/250
+[Worker-1191242]   56/250
+[Worker-1198207]   56/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   60/250
+[Worker-1195816]   60/250
+[Worker-1191242]   60/250
+[Worker-1198207]   60/250
+[Worker-1195813]   64/250
+[Worker-1195816]   64/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   64/250
+[Worker-1191242]   64/250
+[Worker-1195816]   68/250
+[Worker-1195813]   68/250
+[Worker-1198207]   68/250
+[Worker-1191242]   68/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   72/250
+[Worker-1195816]   72/250
+[Worker-1191242]   72/250
+[Worker-1198207]   72/250
+[Worker-1195813]   76/250
+[Worker-1195816]   76/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1191242]   76/250
+[Worker-1198207]   76/250
+[Worker-1195816]   80/250
+[Worker-1195813]   80/250
+[Worker-1191242]   80/250
+[Worker-1198207]   80/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   84/250
+[Worker-1195813]   84/250
+[Worker-1191242]   84/250
+[Worker-1198207]   84/250
+[Worker-1195816]   88/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   88/250
+[Worker-1191242]   88/250
+[Worker-1198207]   88/250
+[Worker-1195813]   92/250
+[Worker-1195816]   92/250
+[Worker-1191242]   92/250
+[Worker-1198207]   92/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   96/250
+[Worker-1195816]   96/250
+[Worker-1191242]   96/250
+[Worker-1198207]   96/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   100/250
+[Worker-1195816]   100/250
+[Worker-1191242]   100/250
+[Worker-1198207]   100/250
+[Worker-1195813]   104/250
+[Worker-1195816]   104/250
+[Worker-1191242]   104/250
+[Worker-1198207]   104/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   108/250
+[Worker-1195816]   108/250
+[Worker-1191242]   108/250
+[Worker-1198207]   108/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   112/250
+[Worker-1195813]   112/250
+[Worker-1191242]   112/250
+[Worker-1198207]   112/250
+[Worker-1195816]   116/250
+[Worker-1195813]   116/250
+[Worker-1191242]   116/250
+[Worker-1198207]   116/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   120/250
+[Worker-1195813]   120/250
+[Worker-1191242]   120/250
+[Worker-1198207]   120/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   124/250
+[Worker-1195816]   124/250
+[Worker-1191242]   124/250
+[Worker-1198207]   124/250
+[Worker-1195816]   128/250
+[Worker-1195813]   128/250
+[Worker-1191242]   128/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   128/250
+[Worker-1195816]   132/250
+[Worker-1195813]   132/250
+[Worker-1191242]   132/250
+[Worker-1198207]   132/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   136/250
+[Worker-1195813]   136/250
+[Worker-1191242]   136/250
+[Worker-1198207]   136/250
+[Worker-1195816]   140/250
+[Worker-1195813]   140/250
+[Worker-1191242]   140/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   140/250
+[Worker-1195816]   144/250
+[Worker-1195813]   144/250
+[Worker-1191242]   144/250
+[Worker-1198207]   144/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   148/250
+[Worker-1195813]   148/250
+[Worker-1191242]   148/250
+[Worker-1198207]   148/250
+[Worker-1195816]   152/250
+[Worker-1195813]   152/250
+[Worker-1191242]   152/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   152/250
+[Worker-1195813]   156/250
+[Worker-1195816]   156/250
+[Worker-1191242]   156/250
+[Worker-1198207]   156/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   160/250
+[Worker-1195813]   160/250
+[Worker-1191242]   160/250
+[Worker-1198207]   160/250
+[Worker-1195816]   164/250
+[Worker-1195813]   164/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1191242]   164/250
+[Worker-1198207]   164/250
+[Worker-1195816]   168/250
+[Worker-1195813]   168/250
+[Worker-1191242]   168/250
+[Worker-1198207]   168/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   172/250
+[Worker-1195813]   172/250
+[Worker-1191242]   172/250
+[Worker-1198207]   172/250
+[Worker-1195816]   176/250
+[Worker-1195813]   176/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1191242]   176/250
+[Worker-1198207]   176/250
+[Worker-1195813]   180/250
+[Worker-1195816]   180/250
+[Worker-1191242]   180/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   180/250
+[Worker-1195813]   184/250
+[Worker-1195816]   184/250
+[Worker-1191242]   184/250
+[Worker-1198207]   184/250
+[Worker-1195816]   188/250
+[Worker-1195813]   188/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1191242]   188/250
+[Worker-1198207]   188/250
+[Worker-1195816]   192/250
+[Worker-1195813]   192/250
+[Worker-1191242]   192/250
+[Worker-1198207]   192/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   196/250
+[Worker-1195813]   196/250
+[Worker-1191242]   196/250
+[Worker-1198207]   196/250
+[Worker-1195813]   200/250
+[Worker-1195816]   200/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1191242]   200/250
+[Worker-1198207]   200/250
+[Worker-1195816]   204/250
+[Worker-1195813]   204/250
+[Worker-1191242]   204/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   204/250
+[Worker-1195816]   208/250
+[Worker-1195813]   208/250
+[Worker-1191242]   208/250
+[Worker-1198207]   208/250
+[Worker-1195816]   212/250
+[Worker-1195813]   212/250
+[Worker-1191242]   212/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   212/250
+[Worker-1195813]   216/250
+[Worker-1195816]   216/250
+[Worker-1191242]   216/250
+[Worker-1198207]   216/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   220/250
+[Worker-1195813]   220/250
+[Worker-1191242]   220/250
+[Worker-1198207]   220/250
+[Worker-1195816]   224/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1191242]   224/250
+[Worker-1195813]   224/250
+[Worker-1198207]   224/250
+[Worker-1195816]   228/250
+[Worker-1191242]   228/250
+[Worker-1195813]   228/250
+[Worker-1198207]   228/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   232/250
+[Worker-1195813]   232/250
+[Worker-1191242]   232/250
+[Worker-1198207]   232/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195816]   236/250
+[Worker-1195813]   236/250
+[Worker-1191242]   236/250
+[Worker-1198207]   236/250
+[Worker-1195816]   240/250
+[Worker-1195813]   240/250
+[Worker-1191242]   240/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1198207]   240/250
+[Worker-1195816]   244/250
+[Worker-1195813]   244/250
+[Worker-1191242]   244/250
+[Worker-1198207]   244/250
+[Stage 301:>                                                        (0 + 4) / 4][Worker-1195813]   248/250
+[Worker-1195816]   248/250
+[Worker-1191242]   248/250
+[Worker-1198207]   248/250
+[Worker-1195813] ✅ Batch 1 done in 2554.51s
+
+[Stage 301:==============>                                          (1 + 3) / 4][Worker-1195816] ✅ Batch 1 done in 2555.34s
+
+[Worker-1191242] ✅ Batch 1 done in 2556.40s
+
+[Stage 301:============================>                            (2 + 2) / 4][Stage 301:==========================================>              (3 + 1) / 4][Worker-1198207] ✅ Batch 1 done in 2558.16s
+
+                                                                                25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 06:25:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+
+Images: 1,000 | GPUs: 1 | Partitions: 4
+======================================================================
+
+
+======================================================================
+✅ INFERENCE DONE — run_006_1000imgs
+======================================================================
+Processed: 1,000
+Time: 2572.74s (42.88 min)
+Throughput (wall-clock): 0.39 img/s
+======================================================================
+
+Saving predictions (reports) for run_006_1000imgs...
+✅ Local results saved
+ℹ️  USE_S3_RESULTS is False — skipping S3 results write.
+
+Computing analytics for run_006_1000imgs...
+✅ 4 analytics saved for run_006_1000imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.
+
+Creating visualizations for run_006_1000imgs...
+  ✅ GPU utilization saved
+  ✅ Dashboard saved
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_006_1000imgs/xray_reports_visualization.html
+✅ Visualizations saved for run_006_1000imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.
+
+Generating report for run_006_1000imgs...
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_006_1000imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 06:25:10
+  Duration (wall-clock for inference): 42.88 minutes
+  Image Count: 1000
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 1,000
+
+RESULTS:
+  Successful reports: 1,000
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 10219.82 ms
+  P95 Latency:  10772.12 ms
+
+  Throughput (per-image latency-based): 0.10 images/sec
+  Daily Capacity (theoretical): 8,640 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_006_1000imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_006_1000imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_006_1000imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
+
+
+📊 Queue simulation written to: /scratch/vsp7230/bigdata_project/outputs/queue_simulation_summary.csv
+        run_label  concurrent_requests  ...  time_to_clear_sec  time_to_clear_min
+0  run_001_20imgs                  100  ...        2344.857550          39.080959
+1  run_001_20imgs                 1000  ...       23448.575497         390.809592
+2  run_001_20imgs                10000  ...      234485.754967        3908.095916
+3  run_002_50imgs                  100  ...        2099.680073          34.994668
+4  run_002_50imgs                 1000  ...       20996.800728         349.946679
+
+[5 rows x 7 columns]
+======================================================================
+✅✅✅ LOAD-TEST COMPLETE! ✅✅✅
+======================================================================
+Total time (all runs): 96.65 minutes
+Per-run summary saved to: /scratch/vsp7230/bigdata_project/outputs/load_test_summary.csv
+Outputs root: /scratch/vsp7230/bigdata_project/outputs
+======================================================================
+2025-12-17 06:25:10,558 - INFO - Closing down clientserver connection

@@ -1,0 +1,244 @@
+file_path,true_label,report_text,inference_time_ms,batch_size,timestamp,gpu_used,error_message
+/scratch/vsp7230/bigdata_project/data/organized/NORMAL/train_NORMAL2-IM-0908-0001.jpeg,NORMAL,"Okay, I have analyzed the chest X-ray provided. Here is a detailed radiology report:
+
+**Radiology Report**
+
+**Patient:** (Assume a patient name is available, otherwise, use ""Unknown"")
+**Date:** October 26, 2023
+**Study Type:** Chest X-ray
+**Quality:** Good
+
+**I. Findings**
+
+*   **Lungs:**
+    *   The lungs appear clear bilaterally, without evidence of consolidation, pleural effusion, or pneumothorax.
+    *   There is no obvious evidence of pulmonary edema.
+    *   The heart size appears within normal limits.
+    *   The mediastinal contours are unremarkable.
+
+*   **Pleura:**
+    *   No pleural effusion is identified.
+    *   No pneumothorax is identified.
+
+*   **Heart and Mediastinum:**
+    *   The heart size is within normal limits.
+    *   The mediastinal contours are unremarkable.
+    *   The trachea is midline.
+
+*   **Bones:**
+    *   The visualized bony structures (ribs, clavicles, and upper portions of the humeri) appear intact.
+    *   No obvious fractures are identified.
+
+*   **Upper Abdomen:**
+    *   The upper abdomen is not well visualized due to the patient's positioning and the limited field of view.
+
+**II. Signs of Pneumonia or Other Pathology**
+
+*   No evidence of pneumonia is identified.
+*   No other significant abnormalities are apparent.
+
+**III. Impression**
+
+*   **Impression:** The chest X-ray shows no acute cardiopulmonary pathology. The lungs are clear, and the heart size is normal.
+
+*   **Differential Diagnosis:**
+    *   Normal chest X-ray.
+    *   (If there were any specific concerns, I would add a differential diagnosis based on those concerns. For example, if there was a history of cough, I might add ""Consider atypical pneumonia if clinical suspicion remains high."")
+
+**Radiologist:** (My Name/Signature)
+**Date:** October 26, 2023",6013.949,5,2025-12-17T04:37:07.175699,NVIDIA A100-SXM4-80GB,
+/scratch/vsp7230/bigdata_project/data/organized/NORMAL/train_IM-0193-0001.jpeg,NORMAL,"Okay, I have analyzed the chest X-ray provided. Here is a detailed radiology report:
+
+**Radiology Report**
+
+**Patient:** (Assume a patient name is provided, e.g., John Doe)
+**Date of Study:** (Assume a date is provided, e.g., 2023-10-27)
+**Study Type:** Chest X-ray
+**Quality:** Good
+
+**I. Study Description:**
+
+*   PA (Posterior-Anterior) chest X-ray.
+*   Single view.
+
+**II. Findings:**
+
+*   **Lungs:**
+    *   The lungs appear clear bilaterally.
+    *   No focal consolidation, pleural effusion, or pneumothorax is identified.
+    *   The heart size is within normal limits.
+    *   The mediastinal contours are normal.
+    *   The hila are unremarkable.
+*   **Pleura:**
+    *   No pleural effusion or pneumothorax is identified.
+    *   The costophrenic angles are sharp.
+*   **Heart and Mediastinum:**
+    *   The heart size is normal.
+    *   The mediastinal contours are normal.
+    *   The trachea is midline.
+*   **Bones:**
+    *   The visualized bony structures are unremarkable.
+*   **Upper Abdomen:**
+    *   The upper abdomen is not well visualized due to the patient's position.
+
+**III. Signs of Pneumonia or Other Pathology:**
+
+*   No evidence of pneumonia is identified.
+*   No other significant pathology is apparent.
+
+**IV. Impression:**
+
+*   Normal chest X-ray.
+*   No acute cardiopulmonary process identified.
+
+**V. Differential Diagnosis:**
+
+*   If the patient is symptomatic, further evaluation may be warranted to rule out other potential causes of their symptoms.
+
+**VI. Recommendations:**
+
+*   If the patient is symptomatic, further evaluation may be warranted.
+
+**Radiologist:** (Assume a radiologist name is provided, e.g., Dr. Jane Smith)
+**Signature:** (Assume a signature is provided)",6013.949,5,2025-12-17T04:37:07.175699,NVIDIA A100-SXM4-80GB,
+/scratch/vsp7230/bigdata_project/data/organized/NORMAL/train_NORMAL2-IM-0718-0001.jpeg,NORMAL,"Okay, I have analyzed the chest X-ray provided. Here is a detailed radiology report:
+
+**Radiology Report**
+
+**Patient:** (Assume a patient name is available, otherwise, use ""Unknown"")
+**Date:** October 26, 2023
+**Study Type:** Chest X-ray
+**Quality:** Good
+
+**I. Study Description:**
+
+*   Single frontal chest radiograph.
+
+**II. Findings:**
+
+*   **Lungs:**
+    *   The lungs appear clear bilaterally without evidence of focal consolidation, pleural effusion, or pneumothorax.
+    *   There is no evidence of pulmonary edema.
+*   **Pleura:**
+    *   The costophrenic angles are sharp. No pleural effusion is identified.
+*   **Heart and Mediastinum:**
+    *   The heart size is within normal limits.
+    *   The mediastinal contours are unremarkable.
+    *   The hila are clear.
+*   **Bones:**
+    *   The visualized bony structures (ribs, clavicles, scapulae) appear intact.
+*   **Upper Abdomen:**
+    *   The upper abdomen is unremarkable.
+
+**III. Signs of Pneumonia or Other Pathology:**
+
+*   No evidence of pneumonia is identified.
+*   No other significant abnormalities are apparent.
+
+**IV. Impression:**
+
+*   The chest X-ray is unremarkable.
+*   **Differential Diagnosis:**
+    *   Normal chest X-ray.
+    *   (If there were any specific clinical concerns, I would add a differential diagnosis based on those concerns, e.g., ""Consider other etiologies if the patient presents with persistent symptoms."")
+
+**V. Conclusion:**
+
+*   The chest X-ray is normal.
+
+**Radiologist:** (Assume a radiologist name is available, otherwise, use ""Unknown"")
+**Signature:** (Assume a signature is available, otherwise, use ""N/A"")",6013.949,5,2025-12-17T04:37:07.175699,NVIDIA A100-SXM4-80GB,
+/scratch/vsp7230/bigdata_project/data/organized/NORMAL/train_NORMAL2-IM-0501-0001.jpeg,NORMAL,"Okay, I have analyzed the chest X-ray provided. Here is a detailed radiology report:
+
+**Radiology Report**
+
+**Patient:** (Assume a patient name is available, otherwise, use ""Unknown"")
+**Date:** October 26, 2023
+**Study Type:** Chest X-ray
+**Quality:** Good
+
+**I. Study Description:**
+
+*   Single frontal chest radiograph.
+
+**II. Findings:**
+
+*   **Lungs:**
+    *   The lungs appear clear bilaterally without evidence of focal consolidation, pleural effusion, or pneumothorax.
+    *   There is no evidence of significant pulmonary edema.
+*   **Pleura:**
+    *   The costophrenic angles are sharp. No pleural effusion is identified.
+*   **Heart and Mediastinum:**
+    *   The heart size is normal.
+    *   The mediastinal contours are unremarkable.
+    *   The trachea is midline.
+*   **Bones:**
+    *   The visualized bony structures (ribs, clavicles, scapulae) appear intact.
+*   **Upper Abdomen:**
+    *   The upper abdomen is not well visualized due to the patient's position and the limited field of view.
+
+**III. Signs of Pneumonia or Other Pathology:**
+
+*   No evidence of pneumonia is identified.
+*   No other significant pathology is apparent on this single view.
+
+**IV. Impression:**
+
+*   **Impression:** Normal chest radiograph.
+*   **Differential Diagnosis:**
+    *   No acute cardiopulmonary pathology.
+    *   Consider further evaluation if clinical suspicion for underlying pathology persists.
+
+**V. Radiologist:**
+
+(Your Name/Signature)
+(Your Credentials)",6013.949,5,2025-12-17T04:37:07.175699,NVIDIA A100-SXM4-80GB,
+/scratch/vsp7230/bigdata_project/data/organized/NORMAL/train_NORMAL2-IM-0936-0001.jpeg,NORMAL,"Okay, I will analyze the chest X-ray provided and generate a detailed radiology report based on the information available.
+
+**Radiology Report**
+
+**Patient:** (Assume a hypothetical patient name for this report)
+**Date:** October 26, 2023
+**Study Type:** Chest X-ray
+**Quality:** Good
+
+**I. Findings:**
+
+*   **Lungs:**
+    *   The lungs appear clear bilaterally.
+    *   No focal consolidation, pleural effusion, or pneumothorax is identified.
+    *   The heart size is within normal limits.
+    *   The mediastinal contours are unremarkable.
+    *   The bony structures of the rib cage are intact.
+
+*   **Pleura:**
+    *   No pleural effusion or pneumothorax is identified.
+
+*   **Heart and Mediastinum:**
+    *   The heart size is within normal limits.
+    *   The mediastinal contours are unremarkable.
+
+*   **Bones:**
+    *   The bony structures of the rib cage are intact.
+
+*   **Upper Abdomen:**
+    *   The upper abdomen is unremarkable.
+
+**II. Signs of Pneumonia or Other Pathology:**
+
+*   No evidence of pneumonia or other significant pathology is identified.
+
+**III. Impression:**
+
+*   The chest X-ray is unremarkable.
+*   No acute cardiopulmonary pathology is identified.
+
+**IV. Differential Diagnosis:**
+
+*   Normal chest X-ray.
+
+**V. Recommendations:**
+
+*   No further imaging is recommended at this time.
+
+**Disclaimer:** This report is based solely on the provided image and assumes a standard chest X-ray protocol. A complete clinical evaluation is necessary for accurate diagnosis and management.",14616.024,5,2025-12-17T04:37:07.175699,NVIDIA A100-SXM4-80GB,

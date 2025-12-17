@@ -1,0 +1,40 @@
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_001_20imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 04:50:48
+  Duration (wall-clock for inference): 1.95 minutes
+  Image Count: 20
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 20
+
+RESULTS:
+  Successful reports: 20
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 4856.32 ms
+  P95 Latency:  5168.66 ms
+
+  Throughput (per-image latency-based): 0.21 images/sec
+  Daily Capacity (theoretical): 18,144 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_001_20imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_001_20imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_001_20imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
