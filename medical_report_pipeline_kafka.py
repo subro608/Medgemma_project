@@ -114,6 +114,13 @@ from pyspark.sql.functions import (
     split,
     size,
 )
+from visualization_module import (
+    create_comprehensive_dashboard,
+    create_timeline_visualization,
+    create_gpu_utilization_chart,
+    create_scalability_comparison,
+    create_xray_report_visualization
+)
 
 import matplotlib
 matplotlib.use('Agg')
@@ -931,6 +938,13 @@ for idx, size in enumerate(test_sizes):
         plt.close()
     else:
         print("⚠️  Skipping report length chart (no successful reports)")
+
+    try:
+        create_gpu_utilization_chart(results_df, VIZ_DIR)
+        create_comprehensive_dashboard(results_df, analytics, VIZ_DIR)
+        create_xray_report_visualization(results_df, VIZ_DIR, num_samples=10)
+    except Exception as e:
+        print(f"⚠️  Visualization error: {e}")
 
     print(f"✅ Visualizations saved for {run_label}")
 
