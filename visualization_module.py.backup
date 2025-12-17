@@ -1,5 +1,5 @@
 # ============================================================================
-# VISUALIZATION FUNCTIONS - UPDATED FOR BALANCED SAMPLING
+# VISUALIZATION FUNCTIONS
 # ============================================================================
 
 
@@ -7,7 +7,6 @@ def create_timeline_visualization(results_df, output_dir):
     """Enhanced timeline with line plot + confidence bands"""
     import pandas as pd
     import matplotlib.pyplot as plt
-    import numpy as np
     from pathlib import Path
     
     pdf = results_df.select("timestamp", "inference_time_ms", "gpu_used").toPandas()
@@ -274,10 +273,7 @@ def create_scalability_comparison(summary_csv_path, output_dir):
 
 
 def create_xray_report_visualization(results_df, output_dir, num_samples=10):
-    """HTML gallery showing X-rays side-by-side with clinical reports
-    
-    FIXED: Now properly handles balanced DataFrame input (5 NORMAL + 5 PNEUMONIA)
-    """
+    """HTML gallery showing X-rays side-by-side with clinical reports"""
     from PIL import Image
     import base64
     from io import BytesIO
@@ -288,17 +284,8 @@ def create_xray_report_visualization(results_df, output_dir, num_samples=10):
 
     print(f"  Creating X-ray + Report gallery ({num_samples} samples)...")
 
-    # ===== FIX: Convert to pandas first, then limit =====
-    # This preserves the balance already created by the pipeline
-    pdf = results_df.toPandas()
-    
-    if len(pdf) == 0:
-        print("  ⚠️  No data to visualize")
-        return None
-    
-    # Use only the samples we have (already balanced if passed correctly)
-    pdf = pdf.head(num_samples)
-    # ===================================================
+    sample_df = results_df.limit(num_samples)
+    pdf = sample_df.toPandas()
 
     html_template = """<!DOCTYPE html>
 <html><head>
