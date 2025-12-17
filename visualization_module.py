@@ -94,7 +94,7 @@ def create_comprehensive_dashboard(results_df, analytics, output_dir):
             ax1.text(bar.get_x() + bar.get_width()/2., height,
                     f'{height:.0f}', ha='center', va='bottom')
     
-    # 2. Throughput (CHANGED TO images/sec)
+    # 2. Throughput
     ax2 = fig.add_subplot(gs[0, 1])
     tp = analytics['throughput_metrics']
     if len(tp) > 0:
@@ -124,14 +124,27 @@ def create_comprehensive_dashboard(results_df, analytics, output_dir):
     pdf = results_df.select("timestamp", "inference_time_ms").toPandas()
     pdf['timestamp'] = pd.to_datetime(pdf['timestamp'])
     pdf = pdf.sort_values('timestamp')
+    
     if len(pdf) > 0:
         start_time = pdf['timestamp'].min()
         pdf['elapsed_sec'] = (pdf['timestamp'] - start_time).dt.total_seconds()
         
+        # ===== FIX: Better labeling for sequential processing =====
+        time_range = pdf['elapsed_sec'].max() - pdf['elapsed_sec'].min()
+        
+        if time_range < 1.0:  # Less than 1 second total - use sequential numbering
+            pdf['x_axis'] = range(1, len(pdf) + 1)  # Start from 1, not 0
+            x_label = 'Image Number'  # ← CLEARER LABEL
+            x_data = pdf['x_axis']
+        else:  # Actual time difference exists
+            x_label = 'Time Elapsed (sec)'
+            x_data = pdf['elapsed_sec']
+        # ================================================================
+        
         # Line plot with markers
-        ax5.plot(pdf['elapsed_sec'], pdf['inference_time_ms'], 
-                marker='o', markersize=6, linewidth=2, 
-                color='#3498db', alpha=0.7, label='Latency')
+        ax5.plot(x_data, pdf['inference_time_ms'], 
+                marker='o', markersize=8, linewidth=2.5, 
+                color='#3498db', alpha=0.8, label='Latency')
         
         # Add mean line
         mean_lat = pdf['inference_time_ms'].mean()
@@ -139,14 +152,14 @@ def create_comprehensive_dashboard(results_df, analytics, output_dir):
                    linewidth=2, label=f'Mean: {mean_lat:.1f}ms', alpha=0.7)
         
         # Fill area for visual appeal
-        ax5.fill_between(pdf['elapsed_sec'], pdf['inference_time_ms'], 
+        ax5.fill_between(x_data, pdf['inference_time_ms'], 
                         alpha=0.2, color='#3498db')
         
-        ax5.set_xlabel('Time Elapsed (sec)', fontweight='bold')
-        ax5.set_ylabel('Latency (ms)', fontweight='bold')
-        ax5.set_title('Processing Timeline', fontweight='bold')
+        ax5.set_xlabel(x_label, fontweight='bold', fontsize=12)
+        ax5.set_ylabel('Latency (ms)', fontweight='bold', fontsize=12)
+        ax5.set_title('Processing Timeline', fontweight='bold', fontsize=14)
         ax5.grid(True, alpha=0.3)
-        ax5.legend()
+        ax5.legend(fontsize=11)
     
     # 5. Summary
     ax6 = fig.add_subplot(gs[2, :])
@@ -268,12 +281,12 @@ def create_xray_report_visualization(results_df, output_dir, num_samples=10):
     import pandas as pd
     import re
     from datetime import datetime
-    
+
     print(f"  Creating X-ray + Report gallery ({num_samples} samples)...")
-    
+
     sample_df = results_df.limit(num_samples)
     pdf = sample_df.toPandas()
-    
+
     html_template = """<!DOCTYPE html>
 <html><head>
 <meta charset="UTF-8">
@@ -386,6 +399,7 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
 .report-content ul{margin:10px 0;padding-left:25px}
 .report-content li{margin:5px 0}
 .report-content p{margin:10px 0}
+
 .section-header{
   font-weight:bold;
   color:#2980b9;
@@ -469,21 +483,21 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
 @media (max-width: 992px) {
   h1 { font-size: 28px; }
   .subtitle { font-size: 13px; }
-  
+
   .sample-card {
     flex-direction: column;
   }
-  
+
   .xray-section {
     flex: 1 1 auto;
     width: 100%;
     padding: 30px 20px;
   }
-  
+
   .xray-img {
     max-width: 350px;
   }
-  
+
   .patient-info {
     grid-template-columns: 1fr;
   }
@@ -494,19 +508,19 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
   body { padding: 10px; }
   h1 { font-size: 24px; }
   .subtitle { font-size: 12px; margin-bottom: 20px; }
-  
+
   .report-section { padding: 20px; }
   .report-title { font-size: 18px; }
-  
+
   .xray-img {
     max-width: 100%;
   }
-  
+
   .metrics-grid {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  
+
   .metric-value { font-size: 16px; }
 }
 
@@ -534,31 +548,29 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
 <div class="subtitle">AI-Powered Chest X-Ray Diagnostic Reports · Real-Time Clinical Decision Support</div>
 {samples_html}
 </div></body></html>"""
-    
+
     def clean_report(raw_report):
         """Clean up AI-generated report - extract only clinical content"""
-        if not raw_report or raw_report == "Error":
+        if not raw_report or raw_report == "Error" or pd.isna(raw_report):
             return "<p><strong>Report generation failed.</strong> Please review image manually.</p>"
         
-        # Remove AI preamble
-        report = re.sub(r'^(Okay,?\s+)?(I have analyzed|Here is|Let me provide).*?report[:\.]?\s*', '', 
-                       raw_report, flags=re.IGNORECASE | re.MULTILINE)
+        report = str(raw_report)
         
-        # Remove duplicate header section
+        # ===== REMOVE AI PREAMBLES (aggressive) =====
+        report = re.sub(r'^(Okay,?\s*)?(I\s+will\s+analyze|I\s+have\s+analyzed|Here\s+is|Let\s+me\s+provide|Based\s+on).*?report[:\.]?\s*', 
+                       '', report, flags=re.IGNORECASE | re.MULTILINE)
+        report = re.sub(r'^\s*Okay[,\.]?\s*', '', report, flags=re.IGNORECASE)
+        
+        # Remove duplicate header sections
         report = re.sub(r'\*\*Radiology Report\*\*.*?(?=\*\*I\.|I\.|\*\*II\.|II\.)', '', 
                        report, flags=re.DOTALL)
         
         # Remove duplicate metadata
-        report = re.sub(r'\*\*Patient:\*\*.*?\n', '', report)
-        report = re.sub(r'\*\*Date:\*\*.*?\n', '', report)
-        report = re.sub(r'\*\*Study Type:\*\*.*?\n', '', report)
-        report = re.sub(r'\*\*Quality:\*\*.*?\n', '', report)
-        
-        # Remove Radiologist and Signature lines
-        report = re.sub(r'\*\*Radiologist:\*\*.*?\n', '', report)
-        report = re.sub(r'Radiologist:.*?\n', '', report, flags=re.IGNORECASE)
-        report = re.sub(r'\*\*Signature:\*\*.*?\n', '', report)
-        report = re.sub(r'Signature:.*?\n', '', report, flags=re.IGNORECASE)
+        for pattern in [r'\*\*Patient:\*\*.*?\n', r'\*\*Date:\*\*.*?\n', 
+                       r'\*\*Study Type:\*\*.*?\n', r'\*\*Quality:\*\*.*?\n',
+                       r'\*\*Radiologist:\*\*.*?\n', r'Radiologist:.*?\n',
+                       r'\*\*Signature:\*\*.*?\n', r'Signature:.*?\n']:
+            report = re.sub(pattern, '', report, flags=re.IGNORECASE)
         
         # Convert markdown bold to HTML
         report = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', report)
@@ -577,34 +589,38 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
                     in_list = False
                 continue
             
-            # Skip radiologist/signature lines
-            if any(keyword in stripped.lower() for keyword in ['radiologist:', 'signature:']):
+            # Skip unwanted lines
+            if any(kw in stripped.lower() for kw in ['radiologist:', 'signature:', 
+                                                       'okay,', 'i will analyze', 
+                                                       'here is', 'based on']):
                 continue
             
-            # Main section headers
-            if re.match(r'^(I{1,3}|IV|V)\.?\s+', stripped):
+            # ===== SECTION HEADERS (I., II., III., IV., V., VI.) =====
+            if re.match(r'^(I{1,3}|IV|V|VI)\.?\s+', stripped):
                 if in_list:
                     formatted_lines.append('</ul>')
                     in_list = False
                 formatted_lines.append(f'<h3>{stripped}</h3>')
             
-            # Sub-headers
-            elif '<strong>' in stripped and '</strong>' in stripped and ':' in stripped:
+            # ===== SUB-HEADERS (remove asterisks completely) =====
+            elif re.match(r'^\*?\s*<strong>[^:]+:</strong>', stripped):
                 if in_list:
                     formatted_lines.append('</ul>')
                     in_list = False
-                formatted_lines.append(f'<div class="section-header">{stripped}</div>')
+                # Remove leading asterisk and space
+                cleaned = re.sub(r'^\*\s*', '', stripped)
+                formatted_lines.append(f'<div class="section-header">{cleaned}</div>')
             
-            # Bullet points
-            elif stripped.startswith('*') or stripped.startswith('-'):
-                item_text = stripped[1:].strip()
+            # ===== BULLET POINTS =====
+            elif stripped.startswith('*') or stripped.startswith('-') or stripped.startswith('•'):
+                item_text = re.sub(r'^[\*\-•]\s*', '', stripped)
                 if item_text:
                     if not in_list:
                         formatted_lines.append('<ul>')
                         in_list = True
                     formatted_lines.append(f'<li>{item_text}</li>')
             
-            # Regular text
+            # ===== REGULAR TEXT =====
             else:
                 if in_list:
                     formatted_lines.append('</ul>')
@@ -616,7 +632,7 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
         
         html_report = '\n'.join(formatted_lines)
         return html_report.strip() if html_report.strip() else "<p>No report content available.</p>"
-    
+
     samples_html = []
     for idx, row in pdf.iterrows():
         try:
@@ -626,17 +642,17 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
             buffered = BytesIO()
             img.save(buffered, format="PNG")
             img_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
-            
+
             # Extract data
             raw_report = row['report_text'] if pd.notna(row['report_text']) else "Error"
             cleaned_report = clean_report(raw_report)
-            
+
             # Performance metrics
             latency_ms = row['inference_time_ms'] if pd.notna(row['inference_time_ms']) else 0
             latency_sec = latency_ms / 1000.0
             gpu = row['gpu_used'] if pd.notna(row['gpu_used']) else "Unknown"
             gpu_short = gpu.split('-')[0] if '-' in gpu else gpu
-            
+
             # Latency class for color coding
             if latency_ms < 5000:
                 latency_class = "fast"
@@ -644,31 +660,33 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
                 latency_class = "medium"
             else:
                 latency_class = "slow"
-            
+
             # Throughput
             throughput_per_sec = 1.0 / latency_sec if latency_sec > 0 else 0
-            
-            # ===== DYNAMIC METADATA =====
+
+            # ===== MEANINGFUL METADATA (Clean & Professional) =====
             filepath = Path(row['file_path'])
             filename = filepath.stem
-            case_id = f"CXR-{filename.upper()}"
             
-            # Extract patient ID from filename
-            patient_match = re.search(r'person(\d+)', filename, re.IGNORECASE)
-            if patient_match:
-                patient_id = f"P{patient_match.group(1).zfill(4)}"
+            # Extract Study ID from IM-0545 format
+            study_match = re.search(r'IM-(\d+)', filename, re.IGNORECASE)
+            if study_match:
+                study_id = f"IM-{study_match.group(1)}"
             else:
-                patient_id = f"P{abs(hash(filename)) % 10000:04d}"
+                study_id = f"STUDY-{abs(hash(filename)) % 100000:05d}"
             
-            # Exam date/time from inference timestamp
+            # Case ID
+            case_id = f"CXR-TRAIN-{study_id}"
+
+            # Report date (no confusing timestamps)
             if pd.notna(row['timestamp']):
-                exam_datetime = pd.to_datetime(row['timestamp'])
-                exam_date = exam_datetime.strftime("%B %d, %Y")
-                study_time = exam_datetime.strftime("%I:%M:%S %p")
+                report_date = pd.to_datetime(row['timestamp']).strftime("%B %d, %Y")
             else:
-                exam_date = datetime.now().strftime("%B %d, %Y")
-                study_time = datetime.now().strftime("%I:%M:%S %p")
+                report_date = datetime.now().strftime("%B %d, %Y")
             
+            # Modality
+            modality = "Chest X-Ray (PA)"
+
             sample_html = f"""
 <div class="sample-card">
   <div class="xray-section">
@@ -679,10 +697,10 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
     <div class="report-header">
       <div class="report-title">RADIOLOGY REPORT - Chest X-Ray</div>
       <div class="patient-info">
-        <div class="info-item"><span class="info-label">Patient ID:</span><span class="info-value">{patient_id}</span></div>
+        <div class="info-item"><span class="info-label">Study ID:</span><span class="info-value">{study_id}</span></div>
         <div class="info-item"><span class="info-label">Case ID:</span><span class="info-value">{case_id}</span></div>
-        <div class="info-item"><span class="info-label">Exam Date:</span><span class="info-value">{exam_date}</span></div>
-        <div class="info-item"><span class="info-label">Study Time:</span><span class="info-value">{study_time}</span></div>
+        <div class="info-item"><span class="info-label">Modality:</span><span class="info-value">{modality}</span></div>
+        <div class="info-item"><span class="info-label">Report Date:</span><span class="info-value">{report_date}</span></div>
       </div>
     </div>
     <div class="report-content">
@@ -698,7 +716,7 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
         </div>
         <div class="metric-card">
           <div class="metric-label">Throughput</div>
-          <div class="metric-value">{throughput_per_sec:.2f}<span class="metric-unit">/hr</span></div>
+          <div class="metric-value">{throughput_per_sec:.2f}<span class="metric-unit">/sec</span></div>
           <div class="metric-subtitle">images per second</div>
         </div>
         <div class="metric-card">
@@ -714,13 +732,13 @@ h1{text-align:center;color:#2c3e50;font-size:32px;margin-bottom:5px}
         except Exception as e:
             print(f"    ⚠️  Error processing sample {idx+1}: {e}")
             continue
-    
+
     final_html = html_template.replace('{samples_html}', '\n'.join(samples_html))
     final_html = final_html.replace('{num_samples}', str(len(samples_html)))
-    
+
     output_path = Path(output_dir) / "xray_reports_visualization.html"
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(final_html)
-    
+
     print(f"  ✅ HTML gallery saved: {output_path}")
     return output_path
