@@ -1,0 +1,174 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/17 04:35:07 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 4) / 4]                                                                                [Stage 14:>                                                         (0 + 1) / 1]/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+
+[Worker-1189535] Starting on cuda (NVIDIA A100-SXM4-80GB), GPU_BATCH_SIZE=4
+[Worker-1189535] Loading model...
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[Stage 14:>                                                         (0 + 1) / 1]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:05<00:05,  5.73s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.77s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.91s/it]
+[Worker-1189535] ✅ Model loaded in 14.71s
+
+[Worker-1189535] Batch 1: 5 images
+[Worker-1189535]   4/5
+[Worker-1189535] ✅ Batch 1 done in 38.68s
+
+                                                                                25/12/17 04:37:09 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:37:09 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:37:09 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:37:09 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 04:37:09 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+✅ Created quick_test_pipeline.py with 5 images
+============================================================
+QUICK TEST - Processing 5 images
+============================================================
+✅ Imports successful
+
+✅ Directories created
+
+✅ Credentials configured
+
+======================================================================
+DATASET SETUP
+======================================================================
+✅ Already downloaded
+
+✅ Dataset organized:
+   NORMAL: 1,583
+   PNEUMONIA: 4,273
+   TOTAL: 5,856
+
+======================================================================
+GPU INFORMATION
+======================================================================
+  GPU 0: NVIDIA A100-SXM4-80GB (79.2 GB)
+======================================================================
+
+⚙  Auto-tuner: max_partitions_per_gpu = 4
+⚙  Auto-tuner: GPU_BATCH_SIZE = 4
+======================================================================
+
+✅ SETUP COMPLETE
+
+⚠️  IMPORTANT: Accept model terms at https://huggingface.co/google/medgemma-4b-it
+
+📋 Next: pipeline will run load-test experiments
+
+
+======================================================================
+STARTING PIPELINE
+======================================================================
+Start: 2025-12-17 04:34:56
+======================================================================
+
+✅ Spark will use: /scratch/vsp7230/miniconda3/envs/torch121/bin/python
+
+Initializing Spark...
+Using base_partitions = 4 (cpu_limit=32, gpu_count=1)
+✅ Spark v3.5.0 initialized
+
+Building input DataFrame...
+⚙  Using filesystem scan from organized dataset
+  NORMAL: 1,583 images
+  PNEUMONIA: 4,273 images
+✅ Total: 5,856 images discovered
+
+⚠️  LOAD-TEST MODE: will run experiments with image counts: [5]
+
+
+======================================================================
+RUN 1/1 — 5 IMAGES  (run_001_5imgs)
+======================================================================
+
+✅ DataFrame for run_001_5imgs: 5 images, 1 partitions
+
+======================================================================
+RUNNING INFERENCE — run_001_5imgs
+======================================================================
+Images: 5 | GPUs: 1 | Partitions: 1
+======================================================================
+
+
+======================================================================
+✅ INFERENCE DONE — run_001_5imgs
+======================================================================
+Processed: 5
+Time: 114.56s (1.91 min)
+Throughput (wall-clock): 0.04 img/s
+======================================================================
+
+Saving predictions (reports) for run_001_5imgs...
+✅ Local results saved
+ℹ️  USE_S3_RESULTS is False — skipping S3 results write.
+
+Computing analytics for run_001_5imgs...
+✅ 4 analytics saved for run_001_5imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 metrics write.
+
+Creating visualizations for run_001_5imgs...
+  ✅ GPU utilization saved
+  ✅ Dashboard saved
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_001_5imgs/xray_reports_visualization.html
+✅ Visualizations saved for run_001_5imgs
+ℹ️  USE_S3_RESULTS is False — skipping S3 visualization write.
+
+Generating report for run_001_5imgs...
+
+================================================================================
+MEDICAL IMAGE REPORT GENERATION PIPELINE - SUMMARY REPORT
+RUN LABEL: run_001_5imgs
+================================================================================
+
+EXECUTION:
+  Date: 2025-12-17 04:37:13
+  Duration (wall-clock for inference): 1.91 minutes
+  Image Count: 5
+  Test Mode: Yes
+
+DATASET:
+  Location: /scratch/vsp7230/bigdata_project/data/organized
+  Total Images in this run: 5
+
+RESULTS:
+  Successful reports: 5
+  Failed (errors):    0
+
+PERFORMANCE (PER-IMAGE LATENCY):
+  Mean Latency: 7734.36 ms
+  P95 Latency:  14616.02 ms
+
+  Throughput (per-image latency-based): 0.13 images/sec
+  Daily Capacity (theoretical): 11,232 images
+
+INFRASTRUCTURE:
+  CPUs used: 4
+  GPUs: 1
+  Spark: 3.5.0
+
+OUTPUT:
+  Results (reports): /scratch/vsp7230/bigdata_project/outputs/results/run_001_5imgs
+  Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/run_001_5imgs
+  Charts: /scratch/vsp7230/bigdata_project/outputs/visualizations/run_001_5imgs
+
+================================================================================
+PIPELINE RUN COMPLETED SUCCESSFULLY
+================================================================================
+
+
+📊 Queue simulation written to: /scratch/vsp7230/bigdata_project/outputs/queue_simulation_summary.csv
+       run_label  concurrent_requests  ...  time_to_clear_sec  time_to_clear_min
+0  run_001_5imgs                  100  ...        9164.425011         152.740417
+1  run_001_5imgs                 1000  ...       91644.250107        1527.404168
+2  run_001_5imgs                10000  ...      916442.501068       15274.041684
+
+[3 rows x 7 columns]
+======================================================================
+✅✅✅ LOAD-TEST COMPLETE! ✅✅✅
+======================================================================
+Total time (all runs): 2.27 minutes
+Per-run summary saved to: /scratch/vsp7230/bigdata_project/outputs/load_test_summary.csv
+Outputs root: /scratch/vsp7230/bigdata_project/outputs
+======================================================================
+2025-12-17 04:37:13,058 - INFO - Closing down clientserver connection

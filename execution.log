@@ -1,0 +1,200 @@
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/17 17:27:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 4) / 4]                                                                                [Stage 9:>                                                          (0 + 4) / 4]
+[Worker-3885118] Loading Med-GEMMA on cuda (Tesla V100-PCIE-32GB)
+
+[Worker-3885114] Loading Med-GEMMA on cuda (Tesla V100-PCIE-32GB)
+
+[Worker-3885106] Loading Med-GEMMA on cuda (Tesla V100-PCIE-32GB)
+
+[Worker-3885110] Loading Med-GEMMA on cuda (Tesla V100-PCIE-32GB)
+[Worker-3885110] ❌ Model load failed: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/medgemma-4b-it.
+401 Client Error. (Request ID: Root=1-69432e92-595469ae7d5305d26dbc3f81;b73067b5-a045-4262-859f-77a36285f4c2)
+
+Cannot access gated repo for url https://huggingface.co/google/medgemma-4b-it/resolve/main/chat_template.json.
+Access to model google/medgemma-4b-it is restricted. You must have access to it and be authenticated to access it. Please log in.
+[Worker-3885106] ❌ Model load failed: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/medgemma-4b-it.
+401 Client Error. (Request ID: Root=1-69432e92-0c3a4fe520167d5309101793;6c51990b-5871-4521-ae5c-3077645c8d9e)
+
+Cannot access gated repo for url https://huggingface.co/google/medgemma-4b-it/resolve/main/chat_template.json.
+Access to model google/medgemma-4b-it is restricted. You must have access to it and be authenticated to access it. Please log in.
+[Worker-3885114] ❌ Model load failed: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/medgemma-4b-it.
+401 Client Error. (Request ID: Root=1-69432e92-706a85c34773cd2a471460c3;6de1f782-0ab7-4aeb-bf4c-b0e96a88c355)
+
+Cannot access gated repo for url https://huggingface.co/google/medgemma-4b-it/resolve/main/chat_template.json.
+Access to model google/medgemma-4b-it is restricted. You must have access to it and be authenticated to access it. Please log in.
+[Worker-3885118] ❌ Model load failed: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/medgemma-4b-it.
+401 Client Error. (Request ID: Root=1-69432e92-40d1e3e16743f58f2f5a201d;84f57e22-edcb-4d8d-a4c2-9259c324c141)
+
+Cannot access gated repo for url https://huggingface.co/google/medgemma-4b-it/resolve/main/chat_template.json.
+Access to model google/medgemma-4b-it is restricted. You must have access to it and be authenticated to access it. Please log in.
+                                                                                25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/12/17 17:28:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+================================================================================
+COMPLETE END-TO-END BIG DATA PIPELINE
+================================================================================
+User: vsp7230
+Scratch: /scratch/vsp7230/bigdata_project
+S3 Enabled: True
+Kafka Enabled: False
+Test Images: 20 (balanced NORMAL/PNEUMONIA)
+================================================================================
+
+
+================================================================================
+STEP 1: DATASET PREPARATION
+================================================================================
+✅ Dataset already downloaded
+✅ Dataset organized:
+   NORMAL: 1,583
+   PNEUMONIA: 4,273
+   TOTAL: 5,856
+
+
+================================================================================
+STEP 2: S3 UPLOAD (Cloud Storage Layer)
+================================================================================
+⚠️  S3 disabled or credentials missing - using local filesystem
+
+================================================================================
+STEP 3: KAFKA STREAMING (Real-time Data Ingestion)
+================================================================================
+⚠️  Kafka disabled - using direct data loading
+
+================================================================================
+STEP 4: GPU DETECTION & AUTO-TUNING
+================================================================================
+  GPU 0: Tesla V100-PCIE-32GB (31.7 GB)
+⚙  GPU Batch Size: 2
+================================================================================
+
+================================================================================
+STEP 5: SPARK INITIALIZATION
+================================================================================
+CPU cores: 48
+GPU count: 1
+Spark partitions: 4
+✅ Spark 3.5.0 initialized
+
+================================================================================
+STEP 6: DATA LOADING (Kafka → S3 → Spark)
+================================================================================
+Loading data from local filesystem...
+✅ Loaded 20 records from local filesystem
+✅ DataFrame ready: 20 images, 4 partitions
+
+================================================================================
+STEP 7: DISTRIBUTED INFERENCE (Spark + Med-GEMMA 4B)
+================================================================================
+Starting distributed inference...
+
+================================================================================
+✅ INFERENCE COMPLETE
+================================================================================
+Processed: 20 images
+Time: 61.43s (1.02 min)
+Throughput: 0.33 img/s
+================================================================================
+
+================================================================================
+STEP 8: SAVING RESULTS (Local + S3)
+================================================================================
+Saving results locally...
+✅ Local results saved to /scratch/vsp7230/bigdata_project/outputs/results/e2e_demo_20251217_172834
+
+================================================================================
+STEP 9: ANALYTICS
+================================================================================
+✅ latency_statistics
+✅ throughput_metrics
+✅ error_statistics
+
+================================================================================
+STEP 10: BALANCED VISUALIZATION (50% NORMAL / 50% PNEUMONIA)
+================================================================================
+Creating visualizations...
+  ✅ Dashboard saved
+✅ Comprehensive dashboard
+  ✅ GPU utilization saved
+✅ GPU utilization chart
+  Creating X-ray + Report gallery (10 samples)...
+  ✅ HTML gallery saved: /scratch/vsp7230/bigdata_project/outputs/visualizations/e2e_demo_20251217_172834/xray_reports_visualization.html
+✅ HTML gallery (balanced): /scratch/vsp7230/bigdata_project/outputs/visualizations/e2e_demo_20251217_172834/xray_reports_visualization.html
+
+================================================================================
+STEP 11: FINAL REPORT
+================================================================================
+
+================================================================================
+COMPLETE END-TO-END BIG DATA PIPELINE - EXECUTION REPORT
+================================================================================
+
+EXECUTION INFO:
+  Date: 2025-12-17 17:28:39
+  Run Label: e2e_demo_20251217_172834
+  Duration: 1.02 minutes
+
+TECHNOLOGY STACK:
+  ✅ S3 Storage: DISABLED
+  ✅ Kafka Streaming: DISABLED
+  ✅ Spark Processing: ENABLED
+  ✅ Med-GEMMA 4B: ENABLED
+  ✅ Balanced Visualization: ENABLED (5 NORMAL + 5 PNEUMONIA)
+
+DATASET:
+  Total Images: 20
+  NORMAL: ~10
+  PNEUMONIA: ~10
+
+PERFORMANCE:
+  Mean Latency: nan ms
+  P95 Latency: nan ms
+  Throughput: nan images/sec
+  Daily Capacity: nan images
+
+RESULTS:
+  Success: 0
+  Errors: 20
+  Success Rate: 0.0%
+
+INFRASTRUCTURE:
+  CPUs: 48
+  GPUs: 1 (Tesla V100-PCIE-32GB)
+  Spark Partitions: 4
+  GPU Batch Size: 2
+
+OUTPUTS:
+  Local Results: /scratch/vsp7230/bigdata_project/outputs/results/e2e_demo_20251217_172834
+  Local Metrics: /scratch/vsp7230/bigdata_project/outputs/metrics/e2e_demo_20251217_172834
+  Local Visualizations: /scratch/vsp7230/bigdata_project/outputs/visualizations/e2e_demo_20251217_172834
+  S3 Results: N/A
+
+================================================================================
+✅ PIPELINE EXECUTION COMPLETE
+================================================================================
+
+
+✅ Report saved: /scratch/vsp7230/bigdata_project/outputs/results/e2e_demo_20251217_172834/execution_report.txt
+✅ Summary saved: /scratch/vsp7230/bigdata_project/outputs/e2e_pipeline_summary.csv
+
+================================================================================
+✅✅✅ COMPLETE END-TO-END PIPELINE FINISHED ✅✅✅
+================================================================================
+
+Results: /scratch/vsp7230/bigdata_project/outputs/results/e2e_demo_20251217_172834
+Visualizations: /scratch/vsp7230/bigdata_project/outputs/visualizations/e2e_demo_20251217_172834
+HTML Gallery: /scratch/vsp7230/bigdata_project/outputs/visualizations/e2e_demo_20251217_172834/xray_reports_visualization.html
+================================================================================
+2025-12-17 17:28:40,268 - INFO - Closing down clientserver connection

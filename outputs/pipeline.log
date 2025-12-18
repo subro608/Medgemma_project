@@ -1,0 +1,154 @@
+2025-12-09 08:43:25,998 - INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: reentrant call inside <_io.BufferedReader name=81>
+2025-12-09 08:43:26,021 - INFO - Closing down clientserver connection
+2025-12-09 08:43:26,022 - ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: reentrant call inside <_io.BufferedReader name=81>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+2025-12-09 08:43:26,027 - INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/pyspark/context.py", line 381, in signal_handler
+    self.cancelAllJobs()
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/pyspark/context.py", line 2446, in cancelAllJobs
+    self._jsc.sc().cancelAllJobs()
+    ^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/pyspark/errors/exceptions/captured.py", line 179, in deco
+    return f(*a, **kw)
+           ^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/protocol.py", line 334, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling o139.sc
+2025-12-09 08:43:26,079 - INFO - Closing down clientserver connection
+2025-12-09 08:43:26,081 - ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/pyspark/context.py", line 381, in signal_handler
+    self.cancelAllJobs()
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/pyspark/context.py", line 2446, in cancelAllJobs
+    self._jsc.sc().cancelAllJobs()
+    ^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/pyspark/errors/exceptions/captured.py", line 179, in deco
+    return f(*a, **kw)
+           ^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/protocol.py", line 334, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling o139.sc
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+2025-12-09 08:43:26,088 - INFO - Closing down clientserver connection
+2025-12-09 08:51:08,352 - INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+2025-12-09 08:51:08,373 - INFO - Closing down clientserver connection
+2025-12-09 08:51:08,375 - ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+2025-12-09 08:51:08,384 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,044 - INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+2025-12-09 08:51:09,046 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,047 - ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/vsp7230/miniconda3/envs/torch121/lib/python3.11/site-packages/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+2025-12-09 08:51:09,049 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,050 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,051 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,051 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,052 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,053 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,054 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,054 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,055 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,056 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,057 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,057 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,058 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,059 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,059 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,060 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,060 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,061 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,062 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,062 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,063 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,064 - INFO - Closing down clientserver connection
+2025-12-09 08:51:09,064 - INFO - Closing down clientserver connection
+2025-12-09 09:08:44,232 - INFO - Closing down clientserver connection
+2025-12-09 09:08:44,233 - INFO - Closing down clientserver connection
+2025-12-09 09:08:44,234 - INFO - Closing down clientserver connection
+2025-12-09 09:08:44,235 - INFO - Closing down clientserver connection
+2025-12-09 09:10:23,132 - INFO - Closing down clientserver connection
+2025-12-09 09:10:23,133 - INFO - Closing down clientserver connection
+2025-12-09 09:10:23,134 - INFO - Closing down clientserver connection
+2025-12-17 04:37:13,058 - INFO - Closing down clientserver connection
+2025-12-17 06:25:10,558 - INFO - Closing down clientserver connection

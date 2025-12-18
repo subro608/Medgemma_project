@@ -1,10 +1,30 @@
-data/
-hf_cache/
-kafka_2.13-3.8.0/
-logs/
-medgemma_env/
-outputs/
-results/
-test/
-*.tgz
+# Environment files
 .env
+.env.local
+*.env
+credentials/
+
+# Large data files
+data/raw/
+*.zip
+*.tar.gz
+
+# Model cache
+hf_cache/
+__pycache__/
+*.pyc
+*.pyo
+
+# Large result files (optional - uncomment if too big)
+# outputs/results/**/*.parquet
+# outputs/results/**/*.json
+
+# Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/

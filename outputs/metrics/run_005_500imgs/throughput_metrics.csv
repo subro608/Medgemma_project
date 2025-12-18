@@ -1,0 +1,2 @@
+total_images,num_gpus,total_time_sec,throughput_img_per_sec
+500,1,3866.48,0.13
